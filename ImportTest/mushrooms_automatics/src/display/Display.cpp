@@ -29,6 +29,10 @@ void Display::init() {
 	pLCDScreen->backlight();
 }
 
+void Display::clear() {
+	pLCDScreen->clear();
+}
+
 /**
  * Обновляет экран
  */
@@ -42,4 +46,9 @@ void Display::updateScreen(ScreenInfo& info) {
 	line = String("T:") + String(info.countTotal) + String(", D:") +
 	String(info.countDay);
 	pLCDScreen->print(line);
+}
+
+void Display::logMessage(int row, String message) {
+	pLCDScreen->setCursor(0, row);
+	pLCDScreen->print(message);
 }

@@ -9,6 +9,8 @@
 #ifndef __DISPLAY_H__
 #define __DISPLAY_H__
 
+#include <avr/pgmspace.h>
+
 #include <LiquidCrystal_I2C.h>
 #include "ScreenInfo.h"
 
@@ -27,8 +29,14 @@ public:
 	// в-принципе, может быть несколько экранов
  	void init();
 	
+
+	void clear();
+	
 	// обновить текст на экране
 	void updateScreen(ScreenInfo& info);
+	
+	// Выводит сообщение на экран
+	void logMessage(int row, String message);
 	
 protected:
 private:

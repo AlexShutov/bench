@@ -73,36 +73,36 @@ void setup() {
 	char buff[16];
 	String line = "";
 
-	screenInfo.schnackOn = false;
-	screenInfo.conveyerOn = false;
-	screenInfo.countTotal = 12345;
-	screenInfo.countDay = 0;
-	pDisplay->updateScreen(screenInfo);
+	//screenInfo.schnackOn = false;
+	//screenInfo.conveyerOn = false;
+	//screenInfo.countTotal = 12345;
+	//screenInfo.countDay = 0;
+	//pDisplay->updateScreen(screenInfo);
+	pDisplay->logMessage(0, "line 1");
+	pDisplay->logMessage(1, "line 2");
 }
 
 
 void loop() {
-	int duration_on = 20;
-	int diration_off = 20;
+	int duration_on = 10;
+	int duration_off = 10;
 	
 	  pLights->setLightIndicator(LIGHT_READY);
-	  pSchnack->setEnabled(true);
-	  pConveyor->setEnabled(!pSchnack->isEnabled());
+	  
 	  
 	  delay(duration_on);                      
 	
 	  pLights->setLightIndicator(LIGHT_ERROR);
 	  
-	  pSchnack->setEnabled(!pSchnack->isEnabled());
-	  pConveyor->setEnabled(!pSchnack->isEnabled());
 	
 	  screenInfo.countTotal++;
 	  screenInfo.countDay++;
 	  screenInfo.schnackOn = screenInfo.countDay % 2;
 	  screenInfo.conveyerOn = screenInfo.countDay % 2;
 	  
-	  if (screenInfo.countDay % 100 == 0) {
+	  if (screenInfo.countDay % 1000 == 0) {
 		pDisplay->updateScreen(screenInfo);
 	  }
-	  delay(diration_off);
+	 
+	  delay(duration_off);
 }
