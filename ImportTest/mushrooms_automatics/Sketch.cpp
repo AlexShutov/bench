@@ -11,27 +11,15 @@
 #include "src/display/screenInfo.h"
 #include "src/display/Display.h"
 #include "src/lights/Lights.h"
-
-//Beginning of Auto generated function prototypes by Atmel Studio
-
-void switchRelay(int relay, bool isOn);
-void initRelays();
-//End of Auto generated function prototypes by Atmel Studio
-
-
-#define PIN_CONVEYOR 3
-#define PIN_FILLER 4
-
+#include "src/relay/Relay.h"
 
 
 /**
  * Выводы реле
  */
  #define PIN_RELAY_CONVEYER 3
- #define PIN_RELAY_FILLER 4
- // типы реле
- #define RELAY_CONVEYER 1
- #define RELAY_FILLER 2
+ #define PIN_RELAY_SCHNACK 4
+
 
 // текущие данные экрана
 ScreenInfo screenInfo;
@@ -62,6 +50,9 @@ struct SchnackPhase {
 
 Display *pDisplay;
 Lights *pLights;
+// реле
+Relay* pSchnack;
+Relay* pConveyor;
 
 void setup() {
 	// инициализация экрана
@@ -70,8 +61,14 @@ void setup() {
 	// лампочек состояния
 	pLights = new Lights();
 	pLights->init();
+	// реле
+	pSchnack = new Relay(PIN_RELAY_SCHNACK);
+	pSchnack->init();
+	pConveyor = new Relay(PIN_RELAY_CONVEYER);
+	pConveyor->init();
 	
-	initRelays();
+	pSchnack->setEnabled(false);
+	pConveyor->setEnabled(false);
 	
 	char buff[16];
 	String line = "";
@@ -83,46 +80,29 @@ void setup() {
 	pDisplay->updateScreen(screenInfo);
 }
 
-/**
- * Переключает реле
- */
-void switchRelay(int relay, bool isOn) {
-  int pin;
-  switch (relay) {
-    case RELAY_CONVEYER:
-      pin = PIN_RELAY_CONVEYER;
-      break;
-    case PIN_RELAY_FILLER:
-    default:
-      pin = PIN_RELAY_FILLER;
-  }
-  digitalWrite(pin, isOn ? HIGH : LOW);
-}
-
-/**
- * инициализирует выходы реле
- */
-void initRelays() {
-  pinMode(PIN_RELAY_CONVEYER, OUTPUT);
-  pinMode(PIN_RELAY_FILLER, OUTPUT);
-  digitalWrite(PIN_RELAY_CONVEYER, LOW);
-  digitalWrite(PIN_RELAY_FILLER, LOW);
-}
-
 
 void loop() {
-	int duration_on = 50;
-	int diration_off = 50;
+	int duration_on = 20;
+	int diration_off = 20;
 	
 	  pLights->setLightIndicator(LIGHT_READY);
+	  pSchnack->setEnabled(true);
+	  pConveyor->setEnabled(!pSchnack->isEnabled());
+	  
 	  delay(duration_on);                      
 	
 	  pLights->setLightIndicator(LIGHT_ERROR);
+	  
+	  pSchnack->setEnabled(!pSchnack->isEnabled());
+	  pConveyor->setEnabled(!pSchnack->isEnabled());
 	
 	  screenInfo.countTotal++;
 	  screenInfo.countDay++;
 	  screenInfo.schnackOn = screenInfo.countDay % 2;
 	  screenInfo.conveyerOn = screenInfo.countDay % 2;
-	  pDisplay->updateScreen(screenInfo);
+	  
+	  if (screenInfo.countDay % 100 == 0) {
+		pDisplay->updateScreen(screenInfo);
+	  }
 	  delay(diration_off);
 }
