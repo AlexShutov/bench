@@ -21,7 +21,7 @@ void Lights::init() {
 	digitalWrite(PIN_STATE_ERROR, LOW);
 }
 
-void Lights::setLightIndicator(State state) {
+void Lights::setLightIndicator(ProcessState state) {
 	switch (state) {
 		case LIGHT_READY:
 			digitalWrite(PIN_STATE_READY, HIGH);

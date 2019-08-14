@@ -295,7 +295,7 @@
     <Compile Include="src\sensor\SchnackTestReader.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\State.h">
+    <Compile Include="src\ProcessState.h">
       <SubType>compile</SubType>
     </Compile>
     <Content Include="readme.html">

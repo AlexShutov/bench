@@ -9,7 +9,7 @@
 #ifndef __LIGHTS_H__
 #define __LIGHTS_H__
 
-#include "../src/State.h"
+#include "../src/ProcessState.h"
 
 /**
  * Ножки индикаторов состояния
@@ -32,7 +32,7 @@ public:
 	void init();
 
 	// устанавливаем состояние 
-	void setLightIndicator(State state);
+	void setLightIndicator(ProcessState state);
 	
 protected:
 private:
