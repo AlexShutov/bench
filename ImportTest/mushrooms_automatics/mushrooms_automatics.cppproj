@@ -74,6 +74,7 @@
       <Value>..\include\libraries\Wire\utility</Value>
       <Value>..\include\libraries\LCD_1602_RUS-master</Value>
       <Value>..\include\libraries\LCD_1602_RUS</Value>
+      <Value>..\include\libraries\Keypad\src</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
@@ -105,6 +106,7 @@
       <Value>..\include\libraries\Wire\utility</Value>
       <Value>..\include\libraries\LCD_1602_RUS-master</Value>
       <Value>..\include\libraries\LCD_1602_RUS</Value>
+      <Value>..\include\libraries\Keypad\src</Value>
     </ListValues>
   </avrgcccpp.compiler.directories.IncludePaths>
   <avrgcccpp.compiler.optimization.level>Optimize for size (-Os)</avrgcccpp.compiler.optimization.level>
@@ -160,6 +162,7 @@
       <Value>..\include\libraries\Wire\utility</Value>
       <Value>..\include\libraries\LCD_1602_RUS-master</Value>
       <Value>..\include\libraries\LCD_1602_RUS</Value>
+      <Value>..\include\libraries\Keypad\src</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
   <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
@@ -191,6 +194,7 @@
       <Value>..\include\libraries\Wire\utility</Value>
       <Value>..\include\libraries\LCD_1602_RUS-master</Value>
       <Value>..\include\libraries\LCD_1602_RUS</Value>
+      <Value>..\include\libraries\Keypad\src</Value>
     </ListValues>
   </avrgcccpp.compiler.directories.IncludePaths>
   <avrgcccpp.compiler.optimization.level>Optimize for size (-Os)</avrgcccpp.compiler.optimization.level>
@@ -216,10 +220,10 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="include\libraries\Keypad\Key.h">
+    <Compile Include="include\libraries\Keypad\src\Key.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="include\libraries\Keypad\Keypad.h">
+    <Compile Include="include\libraries\Keypad\src\Keypad.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\libraries\LiquidCrystal_I2C\LiquidCrystal_I2C.h">
@@ -243,10 +247,10 @@
     <Compile Include="src\display\screenInfo.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\libraries\Keypad\Key.cpp">
+    <Compile Include="src\libraries\Keypad\src\Key.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\libraries\Keypad\Keypad.cpp">
+    <Compile Include="src\libraries\Keypad\src\Keypad.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\libraries\LiquidCrystal_I2C\LiquidCrystal_I2C.cpp">
@@ -270,6 +274,27 @@
     <Compile Include="src\relay\Relay.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\sensor\Keyboard.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\Keyboard.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\SchnackData.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\SchnackDataReader.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\SchnackDataReader.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\SchnackTestReader.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\SchnackTestReader.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\State.h">
       <SubType>compile</SubType>
     </Compile>
@@ -287,19 +312,21 @@
     <Folder Include="arduino_files" />
     <Folder Include="include\" />
     <Folder Include="include\libraries\" />
+    <Folder Include="include\libraries\Keypad\" />
+    <Folder Include="include\libraries\Keypad\src\" />
     <Folder Include="include\libraries\LiquidCrystal_I2C" />
-    <Folder Include="include\libraries\Keypad" />
     <Folder Include="include\libraries\Wire\" />
     <Folder Include="include\libraries\Wire\utility\" />
     <Folder Include="src\" />
     <Folder Include="src\libraries\" />
+    <Folder Include="src\libraries\Keypad\" />
+    <Folder Include="src\libraries\Keypad\src\" />
     <Folder Include="src\libraries\LiquidCrystal_I2C" />
-    <Folder Include="src\libraries\Keypad" />
     <Folder Include="src\libraries\Wire\" />
     <Folder Include="src\libraries\Wire\utility\" />
     <Folder Include="src\display" />
     <Folder Include="src\lights" />
-    <Folder Include="src\logger" />
+    <Folder Include="src\sensor" />
     <Folder Include="src\relay" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />

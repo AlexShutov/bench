@@ -13,6 +13,8 @@
 #include "src/lights/Lights.h"
 #include "src/relay/Relay.h"
 
+#include "src/sensor/Keyboard.h"
+#include "src/sensor/SchnackTestReader.h"
 
 /**
  * Выводы реле
@@ -54,6 +56,12 @@ Lights *pLights;
 Relay* pSchnack;
 Relay* pConveyor;
 
+// клавиатура
+Keyboard* pKeyboard;
+SchnackDataReader* pSchnackReader;
+SchnackData previousReading;
+SchnackData currReading;
+
 void setup() {
 	// инициализация экрана
 	pDisplay = new Display();
@@ -67,19 +75,11 @@ void setup() {
 	pConveyor = new Relay(PIN_RELAY_CONVEYER);
 	pConveyor->init();
 	
-	pSchnack->setEnabled(false);
-	pConveyor->setEnabled(false);
-	
-	char buff[16];
-	String line = "";
-
-	//screenInfo.schnackOn = false;
-	//screenInfo.conveyerOn = false;
-	//screenInfo.countTotal = 12345;
-	//screenInfo.countDay = 0;
-	//pDisplay->updateScreen(screenInfo);
-	pDisplay->logMessage(0, "line 1");
-	pDisplay->logMessage(1, "line 2");
+	// чтение данных шнека
+	pKeyboard = new Keyboard();
+	pKeyboard->init();
+	pSchnackReader = new SchnackTestReader(pKeyboard);
+	pSchnackReader->readSchnackData(previousReading);
 }
 
 
@@ -94,15 +94,16 @@ void loop() {
 	
 	  pLights->setLightIndicator(LIGHT_ERROR);
 	  
-	
-	  screenInfo.countTotal++;
-	  screenInfo.countDay++;
-	  screenInfo.schnackOn = screenInfo.countDay % 2;
-	  screenInfo.conveyerOn = screenInfo.countDay % 2;
-	  
-	  if (screenInfo.countDay % 1000 == 0) {
-		pDisplay->updateScreen(screenInfo);
+	  pSchnackReader->readSchnackData(currReading);
+	  if (previousReading != currReading) {
+			pDisplay->clear();
+		 String message = currReading.mBeginON ? String("begin sensor ON") : String("begin sensor off");
+		 pDisplay->logMessage(0, message);
+		 message = currReading.mEndON ? String("end sensor ON") : String("end sensor off");
+		 pDisplay->logMessage(1, message);
+		 previousReading = currReading;
 	  }
+	 
 	 
 	  delay(duration_off);
 }

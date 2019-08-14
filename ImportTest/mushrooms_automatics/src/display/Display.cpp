@@ -20,6 +20,7 @@ Display::Display()
 Display::~Display()
 {
 	pLCDScreen->clear();
+	delete pLCDScreen;
 	pLCDScreen = 0;
 } //~Display
 
