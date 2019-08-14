@@ -10,17 +10,17 @@
 #define SCHNACKDATA_H_
 
 // Данные, считываемые с сенсоров шнека, забивающего мешки семечками
-struct SchnackData {
+struct Data {
 	// Включен ли датчик начала движения шнека S1
 	bool mBeginON;
 	// Включен ли датчик окончания движения шнека S2
 	bool mEndON;
 	
-	bool operator==(SchnackData &op2) {
+	bool operator==(Data &op2) {
 		return mBeginON == op2.mBeginON &&
 				mEndON == op2.mEndON;
 	}
-	bool operator!=(SchnackData &op2) {
+	bool operator!=(Data &op2) {
 		return !this->operator ==(op2);
 	}
 };

@@ -32,7 +32,7 @@ public:
 	
 	virtual void init();
 	
-	virtual void readSchnackData(SchnackData& data);
+	virtual void readSchnackData(Data& data);
 protected:
 private:
 	SchnackTestReader( const SchnackTestReader &c );

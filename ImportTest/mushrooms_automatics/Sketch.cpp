@@ -59,8 +59,8 @@ Relay* pConveyor;
 // клавиатура
 Keyboard* pKeyboard;
 SchnackDataReader* pSchnackReader;
-SchnackData previousReading;
-SchnackData currReading;
+Data previousReading;
+Data currReading;
 
 void updateReadings(bool init);
 

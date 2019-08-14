@@ -23,7 +23,7 @@ void SchnackTestReader::init() {
 	// ѕусть клавиатура уже проинициализирована
 }
 
-void SchnackTestReader::readSchnackData(SchnackData& data) {
+void SchnackTestReader::readSchnackData(Data& data) {
 	mpKeyboard->update();
 	data.mBeginON = mpKeyboard->isPressed(4);
 	data.mEndON = mpKeyboard->isPressed(3);

@@ -9,7 +9,7 @@
 #ifndef __SCHNACKDATAREADER_H__
 #define __SCHNACKDATAREADER_H__
 
-#include "SchnackData.h"
+#include "Data.h"
 
 // Считыватель данных датчиков шнека. Есть 2 типа- тестовый считыватель, работающий с 
 // клавиатурой, а также реальный, опрашивающий датчики через оптронную развязку.
@@ -22,7 +22,7 @@ public:
 	// настройка
 	virtual void init() = 0;
 	// считываем показания датчиков
-	virtual void readSchnackData(SchnackData& data) = 0;
+	virtual void readSchnackData(Data& data) = 0;
 
 }; //SchnackDataReader
 
