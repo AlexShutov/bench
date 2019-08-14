@@ -62,6 +62,8 @@ SchnackDataReader* pSchnackReader;
 SchnackData previousReading;
 SchnackData currReading;
 
+void updateReadings(bool init);
+
 void setup() {
 	// инициализация экрана
 	pDisplay = new Display();
@@ -79,31 +81,44 @@ void setup() {
 	pKeyboard = new Keyboard();
 	pKeyboard->init();
 	pSchnackReader = new SchnackTestReader(pKeyboard);
+	
 	pSchnackReader->readSchnackData(previousReading);
+	updateReadings(true);
 }
 
+void updateReadings(bool init) {
+	pSchnackReader->readSchnackData(currReading);
+	if (previousReading != currReading || init) {
+		pSchnack->setEnabled(currReading.mBeginON);
+		pConveyor->setEnabled(currReading.mEndON);
+		
+		if (currReading.mBeginON && currReading.mEndON) {
+			pLights->setLightIndicator(LIGHT_READY);
+			} else {
+			pLights->setLightIndicator(LIGHT_ERROR);
+		}
+		
+		//pDisplay->clear();
+		//String message = currReading.mBeginON ? String("begin sensor ON") : String("begin sensor off");
+		//pDisplay->logMessage(0, message);
+		//message = currReading.mEndON ? String("end sensor ON") : String("end sensor off");
+		//pDisplay->logMessage(1, message);
+		previousReading = currReading;
+	}
+	
+}
 
 void loop() {
 	int duration_on = 10;
 	int duration_off = 10;
 	
-	  pLights->setLightIndicator(LIGHT_READY);
+	  //pLights->setLightIndicator(LIGHT_READY);
 	  
 	  
-	  delay(duration_on);                      
+	  //delay(duration_on);                      
 	
-	  pLights->setLightIndicator(LIGHT_ERROR);
-	  
-	  pSchnackReader->readSchnackData(currReading);
-	  if (previousReading != currReading) {
-			pDisplay->clear();
-		 String message = currReading.mBeginON ? String("begin sensor ON") : String("begin sensor off");
-		 pDisplay->logMessage(0, message);
-		 message = currReading.mEndON ? String("end sensor ON") : String("end sensor off");
-		 pDisplay->logMessage(1, message);
-		 previousReading = currReading;
-	  }
-	 
-	 
-	  delay(duration_off);
+	  //pLights->setLightIndicator(LIGHT_ERROR);
+	  updateReadings(false);
+	   
+	  //delay(duration_off);
 }
