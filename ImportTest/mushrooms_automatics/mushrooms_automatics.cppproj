@@ -265,16 +265,22 @@
     <Compile Include="src\domain\StateChangeCallbackBase.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\StateFilling.cpp">
+    <Compile Include="src\domain\states\filling\StateFilling.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\StateFilling.h">
+    <Compile Include="src\domain\states\filling\StateFilling.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\StateIdle.cpp">
+    <Compile Include="src\domain\states\idle\StateIdle.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\StateIdle.h">
+    <Compile Include="src\domain\states\idle\StateIdle.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\idle\StateIdleChangeCallback.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\idle\StateIdleChangeCallback.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\libraries\Keypad\src\Key.cpp">
@@ -346,6 +352,8 @@
     <Folder Include="include\libraries\Wire\utility\" />
     <Folder Include="src\" />
     <Folder Include="src\domain\states" />
+    <Folder Include="src\domain\states\idle" />
+    <Folder Include="src\domain\states\filling" />
     <Folder Include="src\libraries\" />
     <Folder Include="src\libraries\Keypad\" />
     <Folder Include="src\libraries\Keypad\src\" />

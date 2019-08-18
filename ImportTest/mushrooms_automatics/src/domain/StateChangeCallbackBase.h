@@ -9,6 +9,7 @@
 #ifndef __STATECHANGECALLBACKBASE_H__
 #define __STATECHANGECALLBACKBASE_H__
 
+#include "Arduino.h"
 #include "OnStateChangeCallback.h"
 #include "../src/relay/Relay.h"
 #include "../src/display/Display.h"
@@ -36,7 +37,7 @@ private:
 //functions
 public:
 	StateChangeCallbackBase(Relay* pRelay, Display* pDisplay, Lights* pLights);
-	~StateChangeCallbackBase();
+	virtual ~StateChangeCallbackBase();
 	
 	// здесь ничего не делаем
 	virtual void onStateChanged() = 0;

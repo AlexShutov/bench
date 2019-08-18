@@ -17,7 +17,7 @@
 #include "src/sensor/SchnackTestReader.h"
 
 #include "src/domain/State.h"
-#include "src/domain/states/StateIdle.h"
+#include "src/domain/states/idle/StateIdle.h"
 
 /**
  * Выводы реле
