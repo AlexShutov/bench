@@ -16,6 +16,9 @@
 #include "src/sensor/Keyboard.h"
 #include "src/sensor/SchnackTestReader.h"
 
+#include "src/domain/State.h"
+#include "src/domain/states/IdleState.h"
+
 /**
  * Выводы реле
  */
@@ -26,29 +29,6 @@
 // текущие данные экрана
 ScreenInfo screenInfo;
 
-// Бизнес - логика)
-
-/**
- * Состояние лотка подачи (какие датчики включены)
- */
-struct SchnackState {
-  bool s1On;
-  bool s2On;
-};
-
-/**
- * Фаза работы (звено конечного автомата)
- */
-struct SchnackPhase {
-  // следующая фаза, в данном случае возможен лишь один переход
-  SchnackPhase* pNextPhase;
-  // Отслеживаем переход от предыдущего к текущему состоянию
-  SchnackState* pPrevState;
-  // Условие, которое должно выполняться для перехода
-  bool (*pPredicate)(SchnackState& prevState, SchnackState& currState);
-  // Действие при смене фазы
-  void (*pCallback)(void);
-};
 
 Display *pDisplay;
 Lights *pLights;
@@ -58,9 +38,13 @@ Relay* pConveyor;
 
 // клавиатура
 Keyboard* pKeyboard;
-SchnackDataReader* pSchnackReader;
+DataReader* pSchnackReader;
 Data previousReading;
 Data currReading;
+
+State* pIdleState;
+State* pCurrState;
+
 
 void updateReadings(bool init);
 
@@ -84,6 +68,9 @@ void setup() {
 	
 	pSchnackReader->readSchnackData(previousReading);
 	updateReadings(true);
+	
+	pIdleState = new IdleState(pSchnackReader);
+	pCurrState = pIdleState;
 }
 
 void updateReadings(bool init) {

@@ -5,9 +5,9 @@
 * Author: Admin
 */
 
-#include "SchnackDataReader.h"
+#include "DataReader.h"
 
 // virtual destructor
-SchnackDataReader::~SchnackDataReader()
+DataReader::~DataReader()
 {
 } //~SchnackDataReader

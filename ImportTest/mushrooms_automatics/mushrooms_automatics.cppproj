@@ -238,6 +238,9 @@
     <Compile Include="Sketch.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Data.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\display\Display.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -245,6 +248,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\display\screenInfo.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\State.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\State.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\IdleState.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\IdleState.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\libraries\Keypad\src\Key.cpp">
@@ -280,13 +295,10 @@
     <Compile Include="src\sensor\Keyboard.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\sensor\Data.h">
+    <Compile Include="src\sensor\DataReader.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\sensor\SchnackDataReader.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\sensor\SchnackDataReader.h">
+    <Compile Include="src\sensor\DataReader.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\sensor\SchnackTestReader.cpp">
@@ -318,6 +330,7 @@
     <Folder Include="include\libraries\Wire\" />
     <Folder Include="include\libraries\Wire\utility\" />
     <Folder Include="src\" />
+    <Folder Include="src\domain\states" />
     <Folder Include="src\libraries\" />
     <Folder Include="src\libraries\Keypad\" />
     <Folder Include="src\libraries\Keypad\src\" />
@@ -326,6 +339,7 @@
     <Folder Include="src\libraries\Wire\utility\" />
     <Folder Include="src\display" />
     <Folder Include="src\lights" />
+    <Folder Include="src\domain" />
     <Folder Include="src\sensor" />
     <Folder Include="src\relay" />
   </ItemGroup>

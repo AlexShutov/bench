@@ -13,11 +13,11 @@
 #define SCHNACK_KEY_S2 = 3;
 
 #include "Keyboard.h"
-#include "SchnackDataReader.h"
+#include "DataReader.h"
 
 // Имитирует считывание показания датчиков при помощи клавиатуры.
 // Датчики шнека имитируются клавишами 4 (s1) и 3 (s2)
-class SchnackTestReader : public SchnackDataReader 
+class SchnackTestReader : public DataReader 
 {
 //variables
 public:
