@@ -15,7 +15,12 @@ class OnStateChangeCallback
 //functions
 public:
 	
-	virtual void onStateChanged() = 0;
+	// Вызывается при входе в состояние. Например, нужно написать
+	// сообщение на экране или же изменить индикатор готовности.
+	virtual void onEnterState() = 0;
+	
+	// Вызывается при выходе из состояния
+	virtual void onExitStateState() = 0;
 
 }; //OnStateChangeCallback
 

@@ -31,7 +31,7 @@ bool State::pollState() {
 	updateReadings();
 	if (isStateChanged() && checkStateChangeCondition()) {
 		if (mpStateChangeCallback) {
-			mpStateChangeCallback->onStateChanged();
+			mpStateChangeCallback->onExitStateState();
 		}
 		return true;
 	}

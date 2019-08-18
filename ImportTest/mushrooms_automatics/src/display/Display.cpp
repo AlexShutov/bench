@@ -49,6 +49,10 @@ void Display::updateScreen(ScreenInfo& info) {
 	pLCDScreen->print(line);
 }
 
+void Display::updateScreen(ScreenInfo* pInfo) {
+	updateScreen(*pInfo);
+}
+
 void Display::logMessage(int row, String message) {
 	pLCDScreen->setCursor(0, row);
 	pLCDScreen->print(message);

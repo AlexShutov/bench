@@ -9,8 +9,14 @@
 #include "StateChangeCallbackBase.h"
 
 
-StateChangeCallbackBase::StateChangeCallbackBase(Relay* pRelay, Display* pDisplay, Lights* pLights) 
-: mpRelay(pRelay), mpLights(pLights), mpDisplay(pDisplay) {
+StateChangeCallbackBase::StateChangeCallbackBase(Relay* pRelay, 
+		Display* pDisplay, 
+		Lights* pLights,
+		ScreenInfo* pScreenInfo) 
+:	mpRelay(pRelay), 
+	mpLights(pLights), 
+	mpDisplay(pDisplay), 
+	mpScreenInfo(pScreenInfo) {
 } 
 
 

@@ -18,6 +18,7 @@
 
 #include "src/domain/State.h"
 #include "src/domain/states/idle/StateIdle.h"
+#include "src/domain/states/idle/StateIdleChangeCallback.h"
 
 /**
  * Выводы реле
@@ -42,7 +43,10 @@ DataReader* pSchnackReader;
 Data previousReading;
 Data currReading;
 
+// состояние готовности
 State* pIdleState;
+StateIdleChangeCallback* pIdleCallback;
+// указывает на текущее состояние автомата
 State* pCurrState;
 
 
@@ -64,13 +68,20 @@ void setup() {
 	// чтение данных шнека
 	pKeyboard = new Keyboard();
 	pKeyboard->init();
+	
 	pSchnackReader = new SchnackTestReader(pKeyboard);
 	
 	pSchnackReader->readSchnackData(previousReading);
 	updateReadings(true);
 	
-	pIdleState = new StateIdle(pSchnackReader);
+	initStateIdle();
 	pCurrState = pIdleState;
+}
+
+void initStateIdle() {
+	pIdleState = new StateIdle(pSchnackReader);
+	pIdleCallback = new StateIdleChangeCallback(pSchnack, pDisplay, pLights, &screenInfo);
+	pIdleState->setStateChangeCallback(pIdleCallback);
 }
 
 void updateReadings(bool init) {
@@ -96,8 +107,6 @@ void updateReadings(bool init) {
 }
 
 void loop() {
-	int duration_on = 10;
-	int duration_off = 10;
 	
 	  //pLights->setLightIndicator(LIGHT_READY);
 	  

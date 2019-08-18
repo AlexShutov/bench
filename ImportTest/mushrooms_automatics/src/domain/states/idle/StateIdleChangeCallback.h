@@ -20,10 +20,24 @@ private:
 
 //functions
 public:
-	StateIdleChangeCallback(Relay* pRelay, Display* pDisplay, Lights* pLights);
+	StateIdleChangeCallback(Relay* pRelay,
+							Display* pDisplay,
+							Lights* pLights,
+							ScreenInfo* pScreenInfo);
 	virtual ~StateIdleChangeCallback();
 	
-	virtual void onStateChanged();
+	/************************************************************************/
+	/* Показываем зеленую лампочку готовности к работе, будет светиться в 
+	/* режиме ожидания, погаснет, как только включится шнек.
+	/* Печатаем приветственное сообщение в верхней строке, внизу показываются 
+	/* счетчики мешков.
+	/************************************************************************/
+	virtual void onEnterState();
+	/************************************************************************/
+	/* Гасим лампочку готовности
+	/************************************************************************/
+	virtual void onExitStateState();
+
 	
 protected:
 private:

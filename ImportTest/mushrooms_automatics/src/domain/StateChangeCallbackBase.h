@@ -32,20 +32,26 @@ private:
 	Display* mpDisplay;
 	// Индикатор состояния
 	Lights* mpLights;
-	
+	// состояние экрана хранится отдельно, т.к., например, колбэк может вывести на экран лок
+	ScreenInfo* mpScreenInfo;
 	
 //functions
 public:
-	StateChangeCallbackBase(Relay* pRelay, Display* pDisplay, Lights* pLights);
+	StateChangeCallbackBase(Relay* pRelay, 
+							Display* pDisplay, 
+							Lights* pLights,
+							ScreenInfo* pScreenInfo);
 	virtual ~StateChangeCallbackBase();
 	
 	// здесь ничего не делаем
-	virtual void onStateChanged() = 0;
+	virtual void onExitStateState() = 0;
+	virtual void onEnterState() = 0;
 	
 	// аксессоры
 	Relay* getRelay() { return mpRelay; }
 	Display* getDisplay() { return mpDisplay; }
 	Lights* getStateIndicators() { return mpLights; }
+	ScreenInfo* getScreenInfo() { return mpScreenInfo;}
 	
 protected:
 private:

@@ -34,6 +34,7 @@ public:
 	
 	// обновить текст на экране
 	void updateScreen(ScreenInfo& info);
+	void updateScreen(ScreenInfo* pInfo);
 	
 	// Выводит сообщение на экран
 	void logMessage(int row, String message);
