@@ -250,6 +250,12 @@
     <Compile Include="src\display\screenInfo.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\domain\OnStateChangeCallback.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\PollResult.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\domain\State.cpp">
       <SubType>compile</SubType>
     </Compile>

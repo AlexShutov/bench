@@ -13,6 +13,8 @@
 /************************************************************************/
 
 #include "../Data.h"
+#include "OnStateChangeCallback.h"
+#include "PollResult.h"
 #include "../sensor/DataReader.h"
 
 class State
@@ -25,33 +27,48 @@ public:
 	
 	virtual ~State();
 	
+	// Устанавливает колбэк выхода из текущего состояния автомата
+	void setStateChangeCallback(OnStateChangeCallback* pCallback);
+	
 	// Проверяет, нужно ли переходить к следующему состоянию
 	virtual bool checkStateChangeCondition() = 0;
 	
 	// Произошла ли ошибка на этом состоянии 
 	virtual bool isError() = 0;
 	
-	// Действие при переходе на следующее состояние
-	virtual void doOnStateChange() = 0;
+	// инициализирует значение состояния, считывая значение как предыдущее
+	void initState();
 	
-	// Считывает и обновляет состояние.
-	virtual void updateReadings();
+	// Обрабатывает состояние - обновляет данные, проверяет их на ошибку. 
+	// В случае отсутствия ошибки проверяет предикат перехода. Если переходить не нужно, 
+	// то возврашает false. При переходе же происходит вызов колбэка перехода и возвращается true
+	PollResult pollState();
 	
 	// Отдает текущие показания
 	Data* getCurrReadings();
 	// Отдает предыдущие показания
 	Data* getPreviousReadings();
 	
+	
+private:
+	
+	// Считывает и обновляет состояние.
+	virtual void updateReadings();
+	
+	// Поменялось ли состояние
 	bool isStateChanged();
 	
 private:
 	DataReader* mpReader;
 	
+	// колбэк изменения состояния
+	OnStateChangeCallback *mpStateChangeCallback;
+	
 	// предыдущие показания
 	Data mPreviousReadings;
 	// текущие показания
 	Data mCurrReadings;
-	
+
 }; //State
 
 #endif //__STATE_H__

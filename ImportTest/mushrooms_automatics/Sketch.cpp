@@ -92,7 +92,6 @@ void updateReadings(bool init) {
 		//pDisplay->logMessage(1, message);
 		previousReading = currReading;
 	}
-	
 }
 
 void loop() {
@@ -106,6 +105,5 @@ void loop() {
 	
 	  //pLights->setLightIndicator(LIGHT_ERROR);
 	  updateReadings(false);
-	   
 	  //delay(duration_off);
 }
