@@ -20,7 +20,10 @@ IdleState::~IdleState()
 } //~IdleState
 
 bool IdleState::checkStateChangeCondition() {
-	return false;
+	bool previouslyOff = !getPreviousReadings()->mBeginON;
+	bool nowON = getCurrReadings()->mEndON;
+	
+	return previouslyOff && nowON;
 }
 
 bool IdleState::isError() {

@@ -19,7 +19,7 @@ State::~State()
 } //~State
 
 void State::initState() {
-	mpReader->readSchnackData(mPreviousReadings);
+	mpReader->readSchnackData(mPreviousReadings)
 }
 
 void State::updateReadings() {
@@ -27,18 +27,15 @@ void State::updateReadings() {
 	mpReader->readSchnackData(mCurrReadings);		
 }
 
-PollResult State::pollState() {
+bool State::pollState() {
 	updateReadings();
-	if (isError()) {
-		return PollResult::ERROR_STATE;
-	}
 	if (isStateChanged() && checkStateChangeCondition()) {
 		if (mpStateChangeCallback) {
 			mpStateChangeCallback->onStateChanged();
 		}
-		return PollResult::STATE_CHANGED;
+		return true;
 	}
-	return PollResult::KEEP_STATE;
+	return false;
 }
 
 bool State::isStateChanged() {
@@ -55,4 +52,12 @@ Data* State::getCurrReadings() {
 
 Data* State::getPreviousReadings() {
 	return &mCurrReadings;	
+}
+
+void State::setNextState(State* pState) {
+	mpNextState = pState;
+}
+
+State* State::getNextState() {
+	return mpNextState;
 }

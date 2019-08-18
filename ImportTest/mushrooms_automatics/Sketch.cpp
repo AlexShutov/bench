@@ -92,6 +92,7 @@ void updateReadings(bool init) {
 		//pDisplay->logMessage(1, message);
 		previousReading = currReading;
 	}
+	
 }
 
 void loop() {
