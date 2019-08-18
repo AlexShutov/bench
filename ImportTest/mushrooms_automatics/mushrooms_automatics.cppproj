@@ -259,6 +259,12 @@
     <Compile Include="src\domain\State.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\domain\StateChangeCallbackBase.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\StateChangeCallbackBase.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\domain\states\StateFilling.cpp">
       <SubType>compile</SubType>
     </Compile>
