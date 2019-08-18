@@ -12,7 +12,7 @@ StateFilliingCallback::StateFilliingCallback(Relay* pRelay,
 		Display* pDisplay,
 		Lights* pLights,
 		ScreenInfo* pScreenInfo)
-: StateChangeCallbackBase(pRelay, pDisplay, pLights,pScreenInfo){
+: StateChangeCallbackBase(pRelay, pDisplay, pLights, pScreenInfo){
 }
 
 // default destructor
@@ -23,6 +23,9 @@ StateFilliingCallback::~StateFilliingCallback()
 void StateFilliingCallback::onEnterState() {
 	getRelay()->setEnabled(true);
 	getStateIndicators()->setLightIndicator(LIGHT_OFF);
+	// обновляем экран, сейчас шнек включен
+	getScreenInfo()->schnackOn = true;
+	getDisplay()->updateScreen(getScreenInfo());
 }
 
 void StateFilliingCallback::onExitStateState() {

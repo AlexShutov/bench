@@ -11,7 +11,7 @@
 
 #include "../src/domain/StateChangeCallbackBase.h"
 
-class StateIdleChangeCallback : public StateChangeCallbackBase
+class StateIdleCallback : public StateChangeCallbackBase
 {
 //variables
 public:
@@ -20,11 +20,11 @@ private:
 
 //functions
 public:
-	StateIdleChangeCallback(Relay* pRelay,
+	StateIdleCallback(Relay* pRelay,
 							Display* pDisplay,
 							Lights* pLights,
 							ScreenInfo* pScreenInfo);
-	virtual ~StateIdleChangeCallback();
+	virtual ~StateIdleCallback();
 	
 	/************************************************************************/
 	/* Показываем зеленую лампочку готовности к работе, будет светиться в 
@@ -41,8 +41,8 @@ public:
 	
 protected:
 private:
-	StateIdleChangeCallback( const StateIdleChangeCallback &c );
-	StateIdleChangeCallback& operator=( const StateIdleChangeCallback &c );
+	StateIdleCallback( const StateIdleCallback &c );
+	StateIdleCallback& operator=( const StateIdleCallback &c );
 
 }; //StateIdleChangeCallback
 

@@ -283,10 +283,10 @@
     <Compile Include="src\domain\states\idle\StateIdle.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\idle\StateIdleChangeCallback.cpp">
+    <Compile Include="src\domain\states\idle\StateIdleCallback.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\idle\StateIdleChangeCallback.h">
+    <Compile Include="src\domain\states\idle\StateIdleCallback.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\libraries\Keypad\src\Key.cpp">

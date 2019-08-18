@@ -23,11 +23,6 @@ bool StateIdle::checkStateChangeCondition() {
 	bool previouslyOff = !getPreviousReadings()->mBeginON;
 	bool nowON = getCurrReadings()->mBeginON;
 	
-	getDisplay()->logMessage(0, String("Previously " +
-	String(getPreviousReadings()->mBeginON)));
-	delay(500);
-	getDisplay()->logMessage(0, String("now ON? " + String(nowON)));
-	delay(500);
 	return previouslyOff && nowON;
 }
 

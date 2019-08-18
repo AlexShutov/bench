@@ -19,31 +19,25 @@ State::~State()
 } //~State
 
 void State::initState() {
-	getDisplay()->logMessage(0, String("idle init readings"));
 	// считываем начальные данные
 	mpReader->readSchnackData(mPreviousReadings);
 	mCurrReadings = mPreviousReadings;
 	// раз состояние проинициализировано, то мы на нем находимся, 
 	// вызовем действие входа в состояние
-	delay(1000);
 	if (mpStateChangeCallback) {
-		getDisplay()->logMessage(0, String("entering state"));
 		mpStateChangeCallback->onEnterState();
 	}
 }
 
 void State::updateReadings() {
-	getDisplay()->logMessage(0, String("Updating data"));
 	mPreviousReadings = mCurrReadings;
 	mpReader->readSchnackData(mCurrReadings);	
-	delay(500);	
 }
 
 bool State::pollState() {
 	updateReadings();
 	if (isStateChanged() && checkStateChangeCondition()) {
 		if (mpStateChangeCallback) {
-			getDisplay()->logMessage(0, String("Exiting state"));
 			mpStateChangeCallback->onExitStateState();
 		}
 		return true;
@@ -52,14 +46,7 @@ bool State::pollState() {
 }
 
 bool State::isStateChanged() {
-	boolean changed = *getPreviousReadings() != *getCurrReadings();
-	if (changed) {
-		getDisplay()->logMessage(0, String("readings changed"));
-	} else {
-		getDisplay()->logMessage(0, String("readings the same"));
-	}
-	delay(500);
-	return changed;
+	return *getPreviousReadings() != *getCurrReadings();
 }
 
 void State::setStateChangeCallback(OnStateChangeCallback* pCallback) {

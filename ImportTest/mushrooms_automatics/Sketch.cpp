@@ -19,7 +19,7 @@
 #include "src/domain/State.h"
 // ожидание
 #include "src/domain/states/idle/StateIdle.h"
-#include "src/domain/states/idle/StateIdleChangeCallback.h"
+#include "src/domain/states/idle/StateIdleCallback.h"
 // наполнение
 #include "src/domain/states/filling/StateFilling.h"
 #include "src/domain/states/filling/StateFilliingCallback.h"
@@ -46,7 +46,7 @@ DataReader* pSchnackReader;
 
 // состояние готовности
 State* pStateIdle;
-StateIdleChangeCallback* pCallbackIdle;
+StateIdleCallback* pCallbackIdle;
 // состояние наполнения
 State* pStateFilling;
 StateFilliingCallback* pCallbackFilling;
@@ -94,7 +94,7 @@ void setup() {
 void initStateIdle() {
 	pStateIdle = new StateIdle(pSchnackReader);
 	pStateIdle->setDisplay(pDisplay);
-	pCallbackIdle = new StateIdleChangeCallback(pSchnack, 
+	pCallbackIdle = new StateIdleCallback(pSchnack, 
 		pDisplay, pLights, &screenInfo);
 	pStateIdle->setStateChangeCallback(pCallbackIdle);
 }
@@ -109,10 +109,8 @@ void initStateFilling() {
 
 
 void loop() {
-	pDisplay->logMessage(0, String("Entering loop"));
-	delay(1000);
-	while(!pCurrState->pollState()) {}
-	pDisplay->logMessage(0, String("State changed"));
-	pCurrState = pCurrState->getNextState();
-	pCurrState->initState();
+	if (pCurrState->pollState()) {
+		pCurrState = pCurrState->getNextState();
+		pCurrState->initState();	
+	}
 }
