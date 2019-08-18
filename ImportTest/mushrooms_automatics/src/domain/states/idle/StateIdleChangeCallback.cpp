@@ -20,15 +20,12 @@ StateIdleChangeCallback::~StateIdleChangeCallback()
 } //~StateIdleChangeCallback
 
 void StateIdleChangeCallback::onEnterState() {
-	getDisplay()->clear();
-	getDisplay()->updateScreen(getScreenInfo());
-	getDisplay()->logMessage(0, String("READY"));
+	//getDisplay()->updateScreen(getScreenInfo());
+	//getDisplay()->clear();
+	getDisplay()->logMessage(0, String("WAITING"));
 	getStateIndicators()->setLightIndicator(LIGHT_READY);
 }
 
 void StateIdleChangeCallback::onExitStateState() {
-	delay(1000);
-	getDisplay()->logMessage(0, String("WORKING"));
-	// Начнет работать мотор, погасим зеленую лампочку
 	getStateIndicators()->setLightIndicator(LIGHT_OFF);
 }

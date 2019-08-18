@@ -19,7 +19,7 @@
 /* Содержит ссылки на подсистемы станка для выполнения действий при 
 /* переходе между состояниями
 /************************************************************************/
-class StateChangeCallbackBase : OnStateChangeCallback
+class StateChangeCallbackBase : public OnStateChangeCallback
 {
 //variables
 public:

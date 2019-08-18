@@ -11,7 +11,7 @@
 
 #include "../../State.h"
 
-class StateFilling : State
+class StateFilling : public State
 {
 //variables
 public:

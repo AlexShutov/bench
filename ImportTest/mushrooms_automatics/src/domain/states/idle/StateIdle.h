@@ -9,6 +9,7 @@
 #ifndef __IDLESTATE_H__
 #define __IDLESTATE_H__
 
+#include "Arduino.h"
 #include "../../State.h"
 
 /************************************************************************/

@@ -15,6 +15,7 @@
 #include "../Data.h"
 #include "OnStateChangeCallback.h"
 #include "../sensor/DataReader.h"
+#include "../display/Display.h"
 
 class State
 {
@@ -28,9 +29,6 @@ public:
 	
 	// Устанавливает колбэк выхода из текущего состояния автомата
 	void setStateChangeCallback(OnStateChangeCallback* pCallback);
-	
-	// Проверяет, нужно ли переходить к следующему состоянию
-	virtual bool checkStateChangeCondition() = 0;
 	
 	// инициализирует значение состояния, считывая значение как предыдущее
 	void initState();
@@ -49,13 +47,22 @@ public:
 	State* getNextState();
 	void setNextState(State* pNextState);
 	
+	// TODO: убрать, тест
+	void setDisplay(Display* pDisplay) {mpDisplay = pDisplay;}
+	Display* getDisplay() { return mpDisplay;}
 private:
-	
+	Display* mpDisplay;
 	// Считывает и обновляет состояние.
 	virtual void updateReadings();
 	
 	// Поменялось ли состояние
 	bool isStateChanged();
+	
+protected:
+	
+	// Проверяет, нужно ли переходить к следующему состоянию
+	virtual bool checkStateChangeCondition() = 0;
+
 	
 private:
 	DataReader* mpReader;

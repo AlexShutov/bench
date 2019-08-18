@@ -17,8 +17,12 @@
 #include "src/sensor/SchnackTestReader.h"
 
 #include "src/domain/State.h"
+// ожидание
 #include "src/domain/states/idle/StateIdle.h"
 #include "src/domain/states/idle/StateIdleChangeCallback.h"
+// наполнение
+#include "src/domain/states/filling/StateFilling.h"
+#include "src/domain/states/filling/StateFilliingCallback.h"
 
 /**
  * Выводы реле
@@ -30,7 +34,6 @@
 // текущие данные экрана
 ScreenInfo screenInfo;
 
-
 Display *pDisplay;
 Lights *pLights;
 // реле
@@ -40,17 +43,21 @@ Relay* pConveyor;
 // клавиатура
 Keyboard* pKeyboard;
 DataReader* pSchnackReader;
-Data previousReading;
-Data currReading;
 
 // состояние готовности
-State* pIdleState;
-StateIdleChangeCallback* pIdleCallback;
+State* pStateIdle;
+StateIdleChangeCallback* pCallbackIdle;
+// состояние наполнения
+State* pStateFilling;
+StateFilliingCallback* pCallbackFilling;
+
+
 // указывает на текущее состояние автомата
 State* pCurrState;
 
 
-void updateReadings(bool init);
+void initStateIdle();
+void initStateFilling();
 
 void setup() {
 	// инициализация экрана
@@ -71,49 +78,41 @@ void setup() {
 	
 	pSchnackReader = new SchnackTestReader(pKeyboard);
 	
-	pSchnackReader->readSchnackData(previousReading);
-	updateReadings(true);
-	
 	initStateIdle();
-	pCurrState = pIdleState;
+	initStateFilling();
+	// за ожиданием следует наполнение
+	pStateIdle->setNextState(pStateFilling);
+	// пусть за наполнением следует ожидание (без проверок)
+	pStateFilling->setNextState(pStateIdle);
+	
+	// пока что начнем с состояния простоя
+	pCurrState = pStateIdle;
+	// инициализируем состояние
+	pCurrState->initState();
 }
 
 void initStateIdle() {
-	pIdleState = new StateIdle(pSchnackReader);
-	pIdleCallback = new StateIdleChangeCallback(pSchnack, pDisplay, pLights, &screenInfo);
-	pIdleState->setStateChangeCallback(pIdleCallback);
+	pStateIdle = new StateIdle(pSchnackReader);
+	pStateIdle->setDisplay(pDisplay);
+	pCallbackIdle = new StateIdleChangeCallback(pSchnack, 
+		pDisplay, pLights, &screenInfo);
+	pStateIdle->setStateChangeCallback(pCallbackIdle);
 }
 
-void updateReadings(bool init) {
-	pSchnackReader->readSchnackData(currReading);
-	if (previousReading != currReading || init) {
-		pSchnack->setEnabled(currReading.mBeginON);
-		pConveyor->setEnabled(currReading.mEndON);
-		
-		if (currReading.mBeginON && currReading.mEndON) {
-			pLights->setLightIndicator(LIGHT_READY);
-			} else {
-			pLights->setLightIndicator(LIGHT_ERROR);
-		}
-		
-		//pDisplay->clear();
-		//String message = currReading.mBeginON ? String("begin sensor ON") : String("begin sensor off");
-		//pDisplay->logMessage(0, message);
-		//message = currReading.mEndON ? String("end sensor ON") : String("end sensor off");
-		//pDisplay->logMessage(1, message);
-		previousReading = currReading;
-	}
-	
+void initStateFilling() {
+	pStateFilling = new StateFilling(pSchnackReader);
+	pStateFilling->setDisplay(pDisplay);
+	pCallbackFilling =  new StateFilliingCallback(pSchnack, 
+		pDisplay, pLights, &screenInfo);
+	pStateFilling->setStateChangeCallback(pCallbackFilling);
 }
+
 
 void loop() {
-	
-	  //pLights->setLightIndicator(LIGHT_READY);
-	  
-	  
-	  //delay(duration_on);                      
-	
-	  //pLights->setLightIndicator(LIGHT_ERROR);
-	  updateReadings(false);
-	  //delay(duration_off);
+	pDisplay->logMessage(0, String("Entering loop"));
+	delay(1000);
+	while(!pCurrState->pollState()) {}
+	pDisplay->logMessage(0, String("State changed"));
+	pCurrState = pCurrState->getNextState();
+	pCurrState->initState();
 }

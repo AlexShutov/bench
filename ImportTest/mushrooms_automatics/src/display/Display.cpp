@@ -54,6 +54,7 @@ void Display::updateScreen(ScreenInfo* pInfo) {
 }
 
 void Display::logMessage(int row, String message) {
+	pLCDScreen->clear();
 	pLCDScreen->setCursor(0, row);
 	pLCDScreen->print(message);
 }
