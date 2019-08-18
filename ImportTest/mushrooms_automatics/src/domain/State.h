@@ -46,7 +46,7 @@ public:
 	Data* getPreviousReadings();
 	
 	// следующее состояние
-	State* getNextState() { return mpNextState; }
+	State* getNextState();
 	void setNextState(State* pNextState);
 	
 private:

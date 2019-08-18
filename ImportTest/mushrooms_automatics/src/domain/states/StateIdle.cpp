@@ -6,30 +6,30 @@
 */
 
 
-#include "IdleState.h"
+#include "StateIdle.h"
 
 // default constructor
-IdleState::IdleState(DataReader* pReader) : 
+StateIdle::StateIdle(DataReader* pReader) : 
 	State(pReader)
 {
 } //IdleState
 
 // default destructor
-IdleState::~IdleState()
+StateIdle::~StateIdle()
 {
 } //~IdleState
 
-bool IdleState::checkStateChangeCondition() {
+bool StateIdle::checkStateChangeCondition() {
 	bool previouslyOff = !getPreviousReadings()->mBeginON;
 	bool nowON = getCurrReadings()->mEndON;
 	
 	return previouslyOff && nowON;
 }
 
-bool IdleState::isError() {
+bool StateIdle::isError() {
 	return getPreviousReadings()->mBeginON == true;
 }
 
-void IdleState::doOnStateChange() {
+void StateIdle::doOnStateChange() {
 	// TODO
 }

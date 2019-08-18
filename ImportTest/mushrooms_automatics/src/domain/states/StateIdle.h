@@ -21,7 +21,7 @@
 /* замыканиями и размыканиями датчика s2. 
 /* В данном состоянии важно лишь включение датчика s1. (переход 0 -> 1). 
 /************************************************************************/
-class IdleState : public State
+class StateIdle : public State
 {
 //variables
 public:
@@ -30,8 +30,8 @@ private:
 
 //functions
 public:
-	IdleState(DataReader* pReader);
-	virtual ~IdleState();
+	StateIdle(DataReader* pReader);
+	virtual ~StateIdle();
 	
 	// Проверяем включение датчика s1 (переход 0 -> 1)
  	virtual bool checkStateChangeCondition();
@@ -45,8 +45,8 @@ public:
 	
 protected:
 private:
-	IdleState( const IdleState &c );
-	IdleState& operator=( const IdleState &c );
+	StateIdle( const StateIdle &c );
+	StateIdle& operator=( const StateIdle &c );
 
 }; //IdleState
 

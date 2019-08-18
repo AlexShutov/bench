@@ -19,7 +19,7 @@ State::~State()
 } //~State
 
 void State::initState() {
-	mpReader->readSchnackData(mPreviousReadings)
+	mpReader->readSchnackData(mPreviousReadings);
 }
 
 void State::updateReadings() {

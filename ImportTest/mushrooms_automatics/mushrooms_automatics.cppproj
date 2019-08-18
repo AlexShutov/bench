@@ -253,19 +253,16 @@
     <Compile Include="src\domain\OnStateChangeCallback.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\PollResult.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\domain\State.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\domain\State.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\IdleState.cpp">
+    <Compile Include="src\domain\states\StateIdle.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\IdleState.h">
+    <Compile Include="src\domain\states\StateIdle.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\libraries\Keypad\src\Key.cpp">

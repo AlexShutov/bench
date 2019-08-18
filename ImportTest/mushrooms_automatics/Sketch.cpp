@@ -17,7 +17,7 @@
 #include "src/sensor/SchnackTestReader.h"
 
 #include "src/domain/State.h"
-#include "src/domain/states/IdleState.h"
+#include "src/domain/states/StateIdle.h"
 
 /**
  * Выводы реле
@@ -69,7 +69,7 @@ void setup() {
 	pSchnackReader->readSchnackData(previousReading);
 	updateReadings(true);
 	
-	pIdleState = new IdleState(pSchnackReader);
+	pIdleState = new StateIdle(pSchnackReader);
 	pCurrState = pIdleState;
 }
 
