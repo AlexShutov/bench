@@ -9,7 +9,7 @@
 #ifndef __STATE_H__
 #define __STATE_H__
 
-#include "sensor/Data.h"
+#include "../src/Data.h"
 
 class State
 {

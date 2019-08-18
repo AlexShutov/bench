@@ -22,7 +22,7 @@ public:
 	// настройка
 	virtual void init() = 0;
 	// считываем показания датчиков
-	virtual void readSchnackData(Data& data) = 0;
+	virtual void readData(Data& data) = 0;
 
 }; //SchnackDataReader
 

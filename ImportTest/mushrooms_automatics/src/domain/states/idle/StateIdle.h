@@ -41,9 +41,6 @@ public:
 	// ошибка обновления данных (на практике не должно быть)
 	virtual bool isError();
 	
-	// напечатаем сообщение (думаю передавать указатель на функцию обработки)
-	virtual void doOnStateChange();
-	
 protected:
 private:
 	StateIdle( const StateIdle &c );

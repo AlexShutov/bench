@@ -29,7 +29,3 @@ bool StateIdle::checkStateChangeCondition() {
 bool StateIdle::isError() {
 	return getPreviousReadings()->mBeginON == true;
 }
-
-void StateIdle::doOnStateChange() {
-	// TODO
-}

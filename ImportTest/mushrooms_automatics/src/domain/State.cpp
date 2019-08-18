@@ -20,7 +20,7 @@ State::~State()
 
 void State::initState() {
 	// считываем начальные данные
-	mpReader->readSchnackData(mPreviousReadings);
+	mpReader->readData(mPreviousReadings);
 	mCurrReadings = mPreviousReadings;
 	// раз состояние проинициализировано, то мы на нем находимся, 
 	// вызовем действие входа в состояние
@@ -31,12 +31,12 @@ void State::initState() {
 
 void State::updateReadings() {
 	mPreviousReadings = mCurrReadings;
-	mpReader->readSchnackData(mCurrReadings);	
+	mpReader->readData(mCurrReadings);	
 }
 
 bool State::pollState() {
 	updateReadings();
-	if (isStateChanged() && checkStateChangeCondition()) {
+	if (runAlways() || isStateChanged() && checkStateChangeCondition()) {
 		if (mpStateChangeCallback) {
 			mpStateChangeCallback->onExitStateState();
 		}
@@ -59,6 +59,10 @@ Data* State::getCurrReadings() {
 
 Data* State::getPreviousReadings() {
 	return &mPreviousReadings;	
+}
+
+bool State::runAlways() {
+	return false;
 }
 
 void State::setNextState(State* pState) {

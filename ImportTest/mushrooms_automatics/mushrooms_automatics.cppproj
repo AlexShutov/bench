@@ -289,6 +289,18 @@
     <Compile Include="src\domain\states\idle\StateIdleCallback.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\domain\states\uiUpdate\StateUiUpdateCallback.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\uiUpdate\StateUiUpdateCallback.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\uiUpdate\StateUiUpdate.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\uiUpdate\StateUiUpdate.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\libraries\Keypad\src\Key.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -328,10 +340,10 @@
     <Compile Include="src\sensor\DataReader.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\sensor\SchnackTestReader.cpp">
+    <Compile Include="src\sensor\TestDataReader.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\sensor\SchnackTestReader.h">
+    <Compile Include="src\sensor\TestDataReader.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ProcessState.h">
@@ -360,6 +372,7 @@
     <Folder Include="src\domain\states" />
     <Folder Include="src\domain\states\idle" />
     <Folder Include="src\domain\states\filling" />
+    <Folder Include="src\domain\states\uiUpdate" />
     <Folder Include="src\libraries\" />
     <Folder Include="src\libraries\Keypad\" />
     <Folder Include="src\libraries\Keypad\src\" />

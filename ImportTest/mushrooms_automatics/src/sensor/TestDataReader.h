@@ -17,26 +17,27 @@
 
 // Имитирует считывание показания датчиков при помощи клавиатуры.
 // Датчики шнека имитируются клавишами 4 (s1) и 3 (s2)
-class SchnackTestReader : public DataReader 
+class TestDataReader : public DataReader 
 {
 //variables
 public:
 protected:
 private:
-	
-	Keyboard* mpKeyboard;	
+	Keyboard* mpKeyboard;
+	int mKeyBegin;
+	int mKeyEnd;	
 //functions
 public:
-	SchnackTestReader(Keyboard* pKeyboard);
-	~SchnackTestReader();
+	TestDataReader(Keyboard* pKeyboard, int keyBegin, int keyEnd);
+	~TestDataReader();
 	
 	virtual void init();
 	
-	virtual void readSchnackData(Data& data);
+	virtual void readData(Data& data);
 protected:
 private:
-	SchnackTestReader( const SchnackTestReader &c );
-	SchnackTestReader& operator=( const SchnackTestReader &c );
+	TestDataReader( const TestDataReader &c );
+	TestDataReader& operator=( const TestDataReader &c );
 
 }; //SchnackTestReader
 

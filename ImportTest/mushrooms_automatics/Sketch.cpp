@@ -14,7 +14,7 @@
 #include "src/relay/Relay.h"
 
 #include "src/sensor/Keyboard.h"
-#include "src/sensor/SchnackTestReader.h"
+#include "src/sensor/TestDataReader.h"
 
 #include "src/domain/State.h"
 // ожидание
@@ -23,6 +23,9 @@
 // наполнение
 #include "src/domain/states/filling/StateFilling.h"
 #include "src/domain/states/filling/StateFilliingCallback.h"
+// Обновление ui
+#include "src/domain/states/uiUpdate/StateUiUpdate.h"
+#include "src/domain/states/uiUpdate/StateUiUpdateCallback.h"
 
 /**
  * Выводы реле
@@ -43,6 +46,7 @@ Relay* pConveyor;
 // клавиатура
 Keyboard* pKeyboard;
 DataReader* pSchnackReader;
+DataReader* pConveyorReader;
 
 // состояние готовности
 State* pStateIdle;
@@ -50,7 +54,9 @@ StateIdleCallback* pCallbackIdle;
 // состояние наполнения
 State* pStateFilling;
 StateFilliingCallback* pCallbackFilling;
-
+// состояние обновления UI
+State* pStateUiUpdate;
+StateUiUpdateCallback* pCallbackUiUpdate;
 
 // указывает на текущее состояние автомата
 State* pCurrState;
@@ -58,6 +64,7 @@ State* pCurrState;
 
 void initStateIdle();
 void initStateFilling();
+void initStateUiUpdate();
 
 void setup() {
 	// инициализация экрана
@@ -76,16 +83,22 @@ void setup() {
 	pKeyboard = new Keyboard();
 	pKeyboard->init();
 	
-	pSchnackReader = new SchnackTestReader(pKeyboard);
+	pSchnackReader = new TestDataReader(pKeyboard, 4, 3);
+	pConveyorReader = new TestDataReader(pKeyboard, 2, 1);
 	
 	initStateIdle();
 	initStateFilling();
+	initStateUiUpdate();
+	
 	// за ожиданием следует наполнение
 	pStateIdle->setNextState(pStateFilling);
-	// пусть за наполнением следует ожидание (без проверок)
-	pStateFilling->setNextState(pStateIdle);
+	// за наполнением следует обновление UI
+	pStateFilling->setNextState(pStateUiUpdate);
+	// за обновлением Ui следует проверка наполненности бункера 
+	// (TODO, пока просто ожидание)
+	pStateUiUpdate->setNextState(pStateIdle);
 	
-	// пока что начнем с состояния простоя
+	// пока что начнем с состояния простоя (нужно будет с ожидания наполнения бункера)
 	pCurrState = pStateIdle;
 	// инициализируем состояние
 	pCurrState->initState();
@@ -93,7 +106,6 @@ void setup() {
 
 void initStateIdle() {
 	pStateIdle = new StateIdle(pSchnackReader);
-	pStateIdle->setDisplay(pDisplay);
 	pCallbackIdle = new StateIdleCallback(pSchnack, 
 		pDisplay, pLights, &screenInfo);
 	pStateIdle->setStateChangeCallback(pCallbackIdle);
@@ -101,10 +113,16 @@ void initStateIdle() {
 
 void initStateFilling() {
 	pStateFilling = new StateFilling(pSchnackReader);
-	pStateFilling->setDisplay(pDisplay);
-	pCallbackFilling =  new StateFilliingCallback(pSchnack, 
+	pCallbackFilling = new StateFilliingCallback(pSchnack, 
 		pDisplay, pLights, &screenInfo);
 	pStateFilling->setStateChangeCallback(pCallbackFilling);
+}
+
+void initStateUiUpdate() {
+	pStateUiUpdate = new StateUiUpdate(pSchnackReader);
+	pCallbackUiUpdate = new StateUiUpdateCallback(pSchnack,
+		pDisplay, pLights, &screenInfo); 
+	pStateUiUpdate->setStateChangeCallback(pCallbackUiUpdate);
 }
 
 

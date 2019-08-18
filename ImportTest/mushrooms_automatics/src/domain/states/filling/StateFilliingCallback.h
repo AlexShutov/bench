@@ -15,7 +15,7 @@
 /************************************************************************/
 /* Колбэк состояния наполнения мешка шнеком.  
 /************************************************************************/
-class StateFilliingCallback :  public StateChangeCallbackBase
+class StateFilliingCallback : public StateChangeCallbackBase
 {
 //variables
 public:

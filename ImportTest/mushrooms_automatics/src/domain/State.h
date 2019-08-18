@@ -38,20 +38,17 @@ public:
 	// то возврашает false. При переходе же происходит вызов колбэка перехода и возвращается true
 	bool pollState();
 	
-	// Отдает текущие показания
-	Data* getCurrReadings();
-	// Отдает предыдущие показания
-	Data* getPreviousReadings();
-	
 	// следующее состояние
 	State* getNextState();
 	void setNextState(State* pNextState);
 	
-	// TODO: убрать, тест
-	void setDisplay(Display* pDisplay) {mpDisplay = pDisplay;}
-	Display* getDisplay() { return mpDisplay;}
+	// Отдает текущие показания
+	Data* getCurrReadings();
+	
+	// Отдает предыдущие показания
+	Data* getPreviousReadings();
+	
 private:
-	Display* mpDisplay;
 	// Считывает и обновляет состояние.
 	virtual void updateReadings();
 	
@@ -62,7 +59,12 @@ protected:
 	
 	// Проверяет, нужно ли переходить к следующему состоянию
 	virtual bool checkStateChangeCondition() = 0;
-
+	
+	/************************************************************************/
+	/* Для некоторых состояний (например, валидация), не нужно, чтобы состояния
+	/* ввода менялись.
+	/************************************************************************/
+	virtual bool runAlways(); 
 	
 private:
 	DataReader* mpReader;
