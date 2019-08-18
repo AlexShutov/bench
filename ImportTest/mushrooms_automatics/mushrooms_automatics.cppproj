@@ -313,6 +313,12 @@
     <Compile Include="src\domain\states\uiUpdate\StateUiUpdate.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\FillerFacade.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\FillerFacade.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\libraries\Keypad\src\Key.cpp">
       <SubType>compile</SubType>
     </Compile>

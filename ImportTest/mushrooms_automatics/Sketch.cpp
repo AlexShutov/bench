@@ -16,19 +16,7 @@
 #include "src/sensor/Keyboard.h"
 #include "src/sensor/TestDataReader.h"
 
-#include "src/domain/State.h"
-// ожидание
-#include "src/domain/states/idle/StateIdle.h"
-#include "src/domain/states/idle/StateIdleCallback.h"
-// наполнение
-#include "src/domain/states/filling/StateFilling.h"
-#include "src/domain/states/filling/StateFilliingCallback.h"
-// Обновление ui
-#include "src/domain/states/uiUpdate/StateUiUpdate.h"
-#include "src/domain/states/uiUpdate/StateUiUpdateCallback.h"
-// Ожидание заполненности бункера
-#include "src/domain/states/emptyBunkerBarrier/StateEmptyBunkerBarrier.h"
-#include "src/domain/states/emptyBunkerBarrier/StateEmptyBunkerBarrierCallback.h"
+#include "../src/FillerFacade.h"
 
 /**
  * Выводы реле
@@ -50,27 +38,7 @@ Keyboard* pKeyboard;
 DataReader* pSchnackReader;
 DataReader* pConveyorReader;
 
-// состояние готовности
-State* pStateIdle;
-StateIdleCallback* pCallbackIdle;
-// состояние наполнения
-State* pStateFilling;
-StateFilliingCallback* pCallbackFilling;
-// состояние обновления UI
-State* pStateUiUpdate;
-StateUiUpdateCallback* pCallbackUiUpdate;
-// Состояние ожидания заполненности бункера
-State* pStateEmptyBunkerBarrier;
-StateEmptyBunkerBarrierCallback* pStateEmptyBunkerCallback;
-
-// указывает на текущее состояние автомата
-State* pCurrState;
-
-
-void initStateIdle();
-void initStateFilling();
-void initStateUiUpdate();
-void initStateEmptyBunkerBarrier();
+FillerFacade* pFillerSubsystem;
 
 void setup() {
 	// инициализация экрана
@@ -92,57 +60,13 @@ void setup() {
 	pSchnackReader = new TestDataReader(pKeyboard, 4, 3);
 	pConveyorReader = new TestDataReader(pKeyboard, 2, 1);
 	
-	initStateIdle();
-	initStateFilling();
-	initStateUiUpdate();
-	initStateEmptyBunkerBarrier();
-	
-	// за ожиданием следует наполнение
-	pStateIdle->setNextState(pStateFilling);
-	// за наполнением следует обновление UI
-	pStateFilling->setNextState(pStateUiUpdate);
-	// за обновлением Ui следует проверка наполненности бункера 
-	pStateUiUpdate->setNextState(pStateEmptyBunkerBarrier);
-	// После проверки наполненности бункера идет ожидание
-	pStateEmptyBunkerBarrier->setNextState(pStateIdle);
-	
-	// начнем с ожидания наполнения бункера)
-	pCurrState = pStateEmptyBunkerBarrier;
-	// инициализируем состояние
-	pCurrState->initState();
-}
-
-void initStateIdle() {
-	pStateIdle = new StateIdle(pSchnackReader);
-	pCallbackIdle = new StateIdleCallback(pSchnack, 
-		pDisplay, pLights, &screenInfo);
-	pStateIdle->setStateChangeCallback(pCallbackIdle);
-}
-
-void initStateFilling() {
-	pStateFilling = new StateFilling(pSchnackReader);
-	pCallbackFilling = new StateFilliingCallback(pSchnack, 
-		pDisplay, pLights, &screenInfo);
-	pStateFilling->setStateChangeCallback(pCallbackFilling);
-}
-
-void initStateUiUpdate() {
-	pStateUiUpdate = new StateUiUpdate(pSchnackReader);
-	pCallbackUiUpdate = new StateUiUpdateCallback(pSchnack,
-		pDisplay, pLights, &screenInfo); 
-	pStateUiUpdate->setStateChangeCallback(pCallbackUiUpdate);
-}
-
-void initStateEmptyBunkerBarrier() {
-	pStateEmptyBunkerBarrier = new StateEmptyBunkerBarrier(pConveyorReader);
-	pStateEmptyBunkerCallback = new StateEmptyBunkerBarrierCallback(pSchnack,
-		pDisplay, pLights, &screenInfo);
-	pStateEmptyBunkerBarrier->setStateChangeCallback(pStateEmptyBunkerCallback);
+	// Настройка подсистемы заполнения мешков
+	pFillerSubsystem = new FillerFacade(&screenInfo,
+		pSchnack, pDisplay, pLights, pSchnackReader, pConveyorReader);
+		
+	pFillerSubsystem->init();
 }
 
 void loop() {
-	if (pCurrState->pollState()) {
-		pCurrState = pCurrState->getNextState();
-		pCurrState->initState();	
-	}
+	pFillerSubsystem->poll();
 }
