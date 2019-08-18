@@ -265,6 +265,18 @@
     <Compile Include="src\domain\StateChangeCallbackBase.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\domain\states\emptyBunkerBarrier\StateEmptyBunkerBarrier.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\emptyBunkerBarrier\StateEmptyBunkerBarrier.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\emptyBunkerBarrier\StateEmptyBunkerBarrierCallback.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\emptyBunkerBarrier\StateEmptyBunkerBarrierCallback.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\domain\states\filling\StateFilliingCallback.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -372,6 +384,7 @@
     <Folder Include="src\domain\states" />
     <Folder Include="src\domain\states\idle" />
     <Folder Include="src\domain\states\filling" />
+    <Folder Include="src\domain\states\emptyBunkerBarrier" />
     <Folder Include="src\domain\states\uiUpdate" />
     <Folder Include="src\libraries\" />
     <Folder Include="src\libraries\Keypad\" />

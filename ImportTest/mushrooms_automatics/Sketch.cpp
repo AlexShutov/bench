@@ -26,13 +26,15 @@
 // Обновление ui
 #include "src/domain/states/uiUpdate/StateUiUpdate.h"
 #include "src/domain/states/uiUpdate/StateUiUpdateCallback.h"
+// Ожидание заполненности бункера
+#include "src/domain/states/emptyBunkerBarrier/StateEmptyBunkerBarrier.h"
+#include "src/domain/states/emptyBunkerBarrier/StateEmptyBunkerBarrierCallback.h"
 
 /**
  * Выводы реле
  */
  #define PIN_RELAY_CONVEYER 3
  #define PIN_RELAY_SCHNACK 4
-
 
 // текущие данные экрана
 ScreenInfo screenInfo;
@@ -57,6 +59,9 @@ StateFilliingCallback* pCallbackFilling;
 // состояние обновления UI
 State* pStateUiUpdate;
 StateUiUpdateCallback* pCallbackUiUpdate;
+// Состояние ожидания заполненности бункера
+State* pStateEmptyBunkerBarrier;
+StateEmptyBunkerBarrierCallback* pStateEmptyBunkerCallback;
 
 // указывает на текущее состояние автомата
 State* pCurrState;
@@ -65,6 +70,7 @@ State* pCurrState;
 void initStateIdle();
 void initStateFilling();
 void initStateUiUpdate();
+void initStateEmptyBunkerBarrier();
 
 void setup() {
 	// инициализация экрана
@@ -89,17 +95,19 @@ void setup() {
 	initStateIdle();
 	initStateFilling();
 	initStateUiUpdate();
+	initStateEmptyBunkerBarrier();
 	
 	// за ожиданием следует наполнение
 	pStateIdle->setNextState(pStateFilling);
 	// за наполнением следует обновление UI
 	pStateFilling->setNextState(pStateUiUpdate);
 	// за обновлением Ui следует проверка наполненности бункера 
-	// (TODO, пока просто ожидание)
-	pStateUiUpdate->setNextState(pStateIdle);
+	pStateUiUpdate->setNextState(pStateEmptyBunkerBarrier);
+	// После проверки наполненности бункера идет ожидание
+	pStateEmptyBunkerBarrier->setNextState(pStateIdle);
 	
-	// пока что начнем с состояния простоя (нужно будет с ожидания наполнения бункера)
-	pCurrState = pStateIdle;
+	// начнем с ожидания наполнения бункера)
+	pCurrState = pStateEmptyBunkerBarrier;
 	// инициализируем состояние
 	pCurrState->initState();
 }
@@ -125,6 +133,12 @@ void initStateUiUpdate() {
 	pStateUiUpdate->setStateChangeCallback(pCallbackUiUpdate);
 }
 
+void initStateEmptyBunkerBarrier() {
+	pStateEmptyBunkerBarrier = new StateEmptyBunkerBarrier(pConveyorReader);
+	pStateEmptyBunkerCallback = new StateEmptyBunkerBarrierCallback(pSchnack,
+		pDisplay, pLights, &screenInfo);
+	pStateEmptyBunkerBarrier->setStateChangeCallback(pStateEmptyBunkerCallback);
+}
 
 void loop() {
 	if (pCurrState->pollState()) {

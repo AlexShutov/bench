@@ -46,7 +46,7 @@ bool State::pollState() {
 }
 
 bool State::isStateChanged() {
-	return *getPreviousReadings() != *getCurrReadings();
+	return ignorePreviousValue() ||  *getPreviousReadings() != *getCurrReadings();
 }
 
 void State::setStateChangeCallback(OnStateChangeCallback* pCallback) {
@@ -62,6 +62,10 @@ Data* State::getPreviousReadings() {
 }
 
 bool State::runAlways() {
+	return false;
+}
+
+bool State::ignorePreviousValue() {
 	return false;
 }
 
