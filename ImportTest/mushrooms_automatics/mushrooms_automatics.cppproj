@@ -271,52 +271,52 @@
     <Compile Include="src\domain\StateChangeCallbackBase.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\emptyBunkerBarrier\StateEmptyBunkerBarrier.cpp">
+    <Compile Include="src\domain\states\filler\emptyBunkerBarrier\StateEmptyBunkerBarrier.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\emptyBunkerBarrier\StateEmptyBunkerBarrier.h">
+    <Compile Include="src\domain\states\filler\emptyBunkerBarrier\StateEmptyBunkerBarrier.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\emptyBunkerBarrier\StateEmptyBunkerBarrierCallback.cpp">
+    <Compile Include="src\domain\states\filler\emptyBunkerBarrier\StateEmptyBunkerBarrierCallback.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\emptyBunkerBarrier\StateEmptyBunkerBarrierCallback.h">
+    <Compile Include="src\domain\states\filler\emptyBunkerBarrier\StateEmptyBunkerBarrierCallback.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\filling\StateFilliingCallback.cpp">
+    <Compile Include="src\domain\states\filler\filling\StateFilliingCallback.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\filling\StateFilliingCallback.h">
+    <Compile Include="src\domain\states\filler\filling\StateFilliingCallback.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\filling\StateFilling.cpp">
+    <Compile Include="src\domain\states\filler\filling\StateFilling.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\filling\StateFilling.h">
+    <Compile Include="src\domain\states\filler\filling\StateFilling.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\idle\StateIdle.cpp">
+    <Compile Include="src\domain\states\filler\idle\StateIdle.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\idle\StateIdle.h">
+    <Compile Include="src\domain\states\filler\idle\StateIdle.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\idle\StateIdleCallback.cpp">
+    <Compile Include="src\domain\states\filler\idle\StateIdleCallback.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\idle\StateIdleCallback.h">
+    <Compile Include="src\domain\states\filler\idle\StateIdleCallback.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\uiUpdate\StateUiUpdateCallback.cpp">
+    <Compile Include="src\domain\states\filler\uiUpdate\StateUiUpdate.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\uiUpdate\StateUiUpdateCallback.h">
+    <Compile Include="src\domain\states\filler\uiUpdate\StateUiUpdate.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\uiUpdate\StateUiUpdate.cpp">
+    <Compile Include="src\domain\states\filler\uiUpdate\StateUiUpdateCallback.cpp">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\domain\states\uiUpdate\StateUiUpdate.h">
+    <Compile Include="src\domain\states\filler\uiUpdate\StateUiUpdateCallback.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\FillerFacade.cpp">
@@ -394,10 +394,11 @@
     <Folder Include="include\libraries\Wire\utility\" />
     <Folder Include="src\" />
     <Folder Include="src\domain\states" />
-    <Folder Include="src\domain\states\idle" />
-    <Folder Include="src\domain\states\filling" />
-    <Folder Include="src\domain\states\emptyBunkerBarrier" />
-    <Folder Include="src\domain\states\uiUpdate" />
+    <Folder Include="src\domain\states\filler\emptyBunkerBarrier\" />
+    <Folder Include="src\domain\states\filler\filling\" />
+    <Folder Include="src\domain\states\filler\idle\" />
+    <Folder Include="src\domain\states\filler\uiUpdate\" />
+    <Folder Include="src\domain\states\filler" />
     <Folder Include="src\libraries\" />
     <Folder Include="src\libraries\Keypad\" />
     <Folder Include="src\libraries\Keypad\src\" />

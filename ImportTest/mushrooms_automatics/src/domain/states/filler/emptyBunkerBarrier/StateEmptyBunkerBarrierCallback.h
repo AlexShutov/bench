@@ -9,7 +9,7 @@
 #ifndef __STATEEMPTYBUNKERBARRIERCALLBACK_H__
 #define __STATEEMPTYBUNKERBARRIERCALLBACK_H__
 
-#include "../../StateChangeCallbackBase.h"
+#include "../../../StateChangeCallbackBase.h"
 
 /************************************************************************/
 /* Колбэк состояния, проверяющего заполненность бункера.

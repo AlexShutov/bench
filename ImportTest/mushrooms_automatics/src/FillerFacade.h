@@ -19,17 +19,17 @@
 // ѕодключение зависимостей состо€ний автомата, отвечающего за наполнение мешков
 #include "../src/domain/State.h"
 // ожидание
-#include "../src/domain/states/idle/StateIdle.h"
-#include "../src/domain/states/idle/StateIdleCallback.h"
+#include "../src/domain/states/filler//idle/StateIdle.h"
+#include "../src/domain/states/filler/idle/StateIdleCallback.h"
 // наполнение
-#include "../src/domain/states/filling/StateFilling.h"
-#include "../src/domain/states/filling/StateFilliingCallback.h"
+#include "../src/domain/states/filler/filling/StateFilling.h"
+#include "../src/domain/states/filler/filling/StateFilliingCallback.h"
 // ќбновление ui
-#include "../src/domain/states/uiUpdate/StateUiUpdate.h"
-#include "../src/domain/states/uiUpdate/StateUiUpdateCallback.h"
+#include "../src/domain/states/filler/uiUpdate/StateUiUpdate.h"
+#include "../src/domain/states/filler/uiUpdate/StateUiUpdateCallback.h"
 // ќжидание заполненности бункера
-#include "../src/domain/states/emptyBunkerBarrier/StateEmptyBunkerBarrier.h"
-#include "../src/domain/states/emptyBunkerBarrier/StateEmptyBunkerBarrierCallback.h"
+#include "../src/domain/states/filler/emptyBunkerBarrier/StateEmptyBunkerBarrier.h"
+#include "../src/domain/states/filler/emptyBunkerBarrier/StateEmptyBunkerBarrierCallback.h"
 
 /************************************************************************/
 /* ѕодсистема, отвечающа€ за управление наполнением мешков.

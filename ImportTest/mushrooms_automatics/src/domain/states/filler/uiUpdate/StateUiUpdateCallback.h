@@ -9,8 +9,8 @@
 #ifndef __STATEVALIDATIONCALLBACK_H__
 #define __STATEVALIDATIONCALLBACK_H__
 
-#include "../../State.h"
-#include "../../StateChangeCallbackBase.h"
+#include "../../../State.h"
+#include "../../../StateChangeCallbackBase.h"
 
 /************************************************************************/
 /* Данная стадия обновляет UI  
