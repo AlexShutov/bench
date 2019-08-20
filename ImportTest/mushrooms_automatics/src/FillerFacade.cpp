@@ -8,7 +8,6 @@
 
 #include "FillerFacade.h"
 
-// default constructor
 FillerFacade::FillerFacade(ScreenInfo* pScreenInfo,
 	Relay* pSchnack,		
 	Display *pDisplay,
@@ -77,7 +76,7 @@ void FillerFacade::init() {
 	pCurrState->initState();
 }
 
-void FillerFacade::poll() {
+void FillerFacade::pollSchnack() {
 	if (pCurrState->pollState()) {
 		pCurrState = pCurrState->getNextState();
 		pCurrState->initState();

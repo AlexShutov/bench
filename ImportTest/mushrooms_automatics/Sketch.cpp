@@ -17,6 +17,7 @@
 #include "src/sensor/TestDataReader.h"
 
 #include "../src/FillerFacade.h"
+#include "../src/ConveyorFacade.h"
 
 /**
  * Выводы реле
@@ -39,11 +40,16 @@ DataReader* pSchnackReader;
 DataReader* pConveyorReader;
 
 FillerFacade* pFillerSubsystem;
+ConveyorFacade* pConveyorFacade;
 
 void setup() {
 	// инициализация экрана
 	pDisplay = new Display();
 	pDisplay->init();
+	// TODO: считать статистику
+	// покажем счетчики и состояние
+	pDisplay->updateScreen(&screenInfo);
+	
 	// лампочек состояния
 	pLights = new Lights();
 	pLights->init();
@@ -60,13 +66,21 @@ void setup() {
 	pSchnackReader = new TestDataReader(pKeyboard, 4, 3);
 	pConveyorReader = new TestDataReader(pKeyboard, 2, 1);
 	
+	// настройка упраления лентой подачи
+	pConveyorFacade = new ConveyorFacade(&screenInfo, 
+		pConveyor, pDisplay, pConveyorReader);
+	
 	// Настройка подсистемы заполнения мешков
 	pFillerSubsystem = new FillerFacade(&screenInfo,
 		pSchnack, pDisplay, pLights, pSchnackReader, pConveyorReader);
-		
+	
+	// сначала инициализируем ленту, т.к. начальное состояние шнека зависит 
+	// от заполненности бункера семечкой  (лента)
+	pConveyorFacade->init();
 	pFillerSubsystem->init();
 }
 
 void loop() {
-	pFillerSubsystem->poll();
+	pFillerSubsystem->pollSchnack();
+	pConveyorFacade->pollConveyor();
 }

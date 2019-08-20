@@ -92,7 +92,7 @@ public:
 	void init();
 	
 	// опрашиваем состояние
-	void poll();
+	void pollSchnack();
 	
 protected:
 private:
@@ -100,7 +100,6 @@ private:
 	FillerFacade& operator=( const FillerFacade &c );
 	
 	// методы для инициализации отдельных состояний автомата
-	
 	
 	void initStateIdle();
 	void initStateFilling();
