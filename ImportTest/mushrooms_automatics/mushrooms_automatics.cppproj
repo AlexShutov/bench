@@ -283,6 +283,12 @@
     <Compile Include="src\domain\states\conveyor\emptying\StateConveyorEmptyingCallback.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\domain\states\conveyor\filling\StateConveyorFilling.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\conveyor\filling\StateConveyorFilling.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\domain\states\filler\emptyBunkerBarrier\StateEmptyBunkerBarrier.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -407,6 +413,7 @@
     <Folder Include="src\" />
     <Folder Include="src\domain\states" />
     <Folder Include="src\domain\states\conveyor\emptying" />
+    <Folder Include="src\domain\states\conveyor\filling" />
     <Folder Include="src\domain\states\filler\emptyBunkerBarrier\" />
     <Folder Include="src\domain\states\filler\filling\" />
     <Folder Include="src\domain\states\filler\idle\" />

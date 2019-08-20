@@ -28,8 +28,8 @@ void ConveyorFacade::init() {
 	initStateFilling();
 	initStateEmptying();
 
-	// TODO
-	mpStateEmptying->setNextState(mpStateEmptying);
+	mpStateEmptying->setNextState(mpStateFilling);
+	mpStateFilling->setNextState(mpStateEmptying);
 	// всегда начинаем с состояния опустошения, чтобы учесть случай,
 	// когда при запуске в бункере еще есть семечка.
 	pCurrState = mpStateEmptying;
@@ -38,7 +38,7 @@ void ConveyorFacade::init() {
 }
 
 void ConveyorFacade::initStateFilling() {
-	
+	mpStateFilling = new StateConveyorFilling(mpConveyorReader);
 }
 
 void ConveyorFacade::initStateEmptying() {
