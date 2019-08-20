@@ -34,6 +34,7 @@ void ConveyorFacade::initStateFilling() {
 }
 
 void ConveyorFacade::initStateEmptying() {
+	mpStateEmptying = new StateConveyorEmptying(mpConveyorReader);
 	
 }
 
