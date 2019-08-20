@@ -271,6 +271,18 @@
     <Compile Include="src\domain\StateChangeCallbackBase.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\domain\states\conveyor\emptying\StateConveyorEmptying.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\conveyor\emptying\StateConveyorEmptying.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\conveyor\emptying\StateConveyorEmptyingCallback.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\conveyor\emptying\StateConveyorEmptyingCallback.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\domain\states\filler\emptyBunkerBarrier\StateEmptyBunkerBarrier.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -394,11 +406,13 @@
     <Folder Include="include\libraries\Wire\utility\" />
     <Folder Include="src\" />
     <Folder Include="src\domain\states" />
+    <Folder Include="src\domain\states\conveyor\emptying" />
     <Folder Include="src\domain\states\filler\emptyBunkerBarrier\" />
     <Folder Include="src\domain\states\filler\filling\" />
     <Folder Include="src\domain\states\filler\idle\" />
     <Folder Include="src\domain\states\filler\uiUpdate\" />
     <Folder Include="src\domain\states\filler" />
+    <Folder Include="src\domain\states\conveyor" />
     <Folder Include="src\libraries\" />
     <Folder Include="src\libraries\Keypad\" />
     <Folder Include="src\libraries\Keypad\src\" />

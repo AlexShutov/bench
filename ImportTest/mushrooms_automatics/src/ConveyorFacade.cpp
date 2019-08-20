@@ -27,6 +27,14 @@ ConveyorFacade::~ConveyorFacade()
 void ConveyorFacade::init() {
 	initStateFilling();
 	initStateEmptying();
+
+	// TODO
+	mpStateEmptying->setNextState(mpStateEmptying);
+	// всегда начинаем с состояния опустошения, чтобы учесть случай,
+	// когда при запуске в бункере еще есть семечка.
+	pCurrState = mpStateEmptying;
+	// инициализируем состояние
+	pCurrState->initState();
 }
 
 void ConveyorFacade::initStateFilling() {
@@ -35,9 +43,16 @@ void ConveyorFacade::initStateFilling() {
 
 void ConveyorFacade::initStateEmptying() {
 	mpStateEmptying = new StateConveyorEmptying(mpConveyorReader);
-	
+	// лента не может изменять индикаторы, их меняет только привод шнека
+	mpStateEmptyingCallback = new StateConveyorEmptyingCallback(mpConveyor, 
+		mpDisplay, nullptr, mpScreenInfo);
+	mpStateEmptying->setStateChangeCallback(mpStateEmptyingCallback);
 }
 
 void ConveyorFacade::pollConveyor() {
-	
+	// TODO:  можно вынести в базовый класс, пока не заморачиваюсь
+	if (pCurrState->pollState()) {
+		pCurrState = pCurrState->getNextState();
+		pCurrState->initState();
+	}
 }

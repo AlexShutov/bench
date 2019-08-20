@@ -19,7 +19,8 @@
 // Зависимости состояний автомата, отвечающего за управление лентой конвейера
 #include "../src/domain/State.h"
 // Состояние опустошения бункера
-#include "../src/domain/states/conveyor/StateConveyorEmptying.h"
+#include "../src/domain/states/conveyor/emptying/StateConveyorEmptying.h"
+#include "../src/domain/states/conveyor/emptying/StateConveyorEmptyingCallback.h"
 
 /************************************************************************/
 /* Подсистема, отвечающая за управление лентой подачи
@@ -43,8 +44,8 @@ private:
 	
 	// опустошение бункера
 	State* mpStateEmptying;
+	StateConveyorEmptyingCallback* mpStateEmptyingCallback;
 	
-	// TODO: добавить состояния заполнения и опустошения
 	
 	// указывает на текущее состояние автомата
 	State* pCurrState;
