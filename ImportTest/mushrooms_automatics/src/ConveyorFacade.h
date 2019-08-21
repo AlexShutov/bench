@@ -23,6 +23,7 @@
 #include "../src/domain/states/conveyor/emptying/StateConveyorEmptyingCallback.h"
 // состояние наполнения бункера
 #include "../src/domain/states/conveyor/filling/StateConveyorFilling.h"
+#include "../src/domain/states/conveyor/filling/StateConveyorFillingCallback.h"
 
 /************************************************************************/
 /* Подсистема, отвечающая за управление лентой подачи
@@ -46,13 +47,14 @@ private:
 	
 	// заполнение бункера
 	State* mpStateFilling;
+	StateConveyorFillingCallback* mpStateFillingCallback;
 	// опустошение бункера
 	State* mpStateEmptying;
 	StateConveyorEmptyingCallback* mpStateEmptyingCallback;	
 	
-	
 	// указывает на текущее состояние автомата
 	State* pCurrState;
+	
 	
 //functions
 public:

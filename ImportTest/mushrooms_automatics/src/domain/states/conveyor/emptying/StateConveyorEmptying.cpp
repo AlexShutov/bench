@@ -28,5 +28,6 @@ bool StateConveyorEmptying::isError() {
 }
 
 bool StateConveyorEmptying::checkStateChangeCondition() {
-	return !getCurrReadings()->mBeginON;
+	return !getCurrReadings()->mBeginON &&
+		!getCurrReadings()->mEndON;
 }

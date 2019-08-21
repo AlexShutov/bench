@@ -39,6 +39,9 @@ void ConveyorFacade::init() {
 
 void ConveyorFacade::initStateFilling() {
 	mpStateFilling = new StateConveyorFilling(mpConveyorReader);
+	mpStateFillingCallback = new StateConveyorFillingCallback(mpConveyor,
+		mpDisplay, nullptr, mpScreenInfo);
+	mpStateFilling->setStateChangeCallback(mpStateFillingCallback);
 }
 
 void ConveyorFacade::initStateEmptying() {

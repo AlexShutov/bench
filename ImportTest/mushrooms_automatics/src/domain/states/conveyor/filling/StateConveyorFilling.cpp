@@ -28,5 +28,5 @@ bool StateConveyorFilling::isError() {
 }
 
 bool StateConveyorFilling::checkStateChangeCondition() {
-	return getCurrReadings()->mEndON;
+	return getCurrReadings()->mEndON && getCurrReadings()->mBeginON;
 }

@@ -289,6 +289,12 @@
     <Compile Include="src\domain\states\conveyor\filling\StateConveyorFilling.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\domain\states\conveyor\filling\StateConveyorFillingCallback.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\domain\states\conveyor\filling\StateConveyorFillingCallback.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\domain\states\filler\emptyBunkerBarrier\StateEmptyBunkerBarrier.cpp">
       <SubType>compile</SubType>
     </Compile>
