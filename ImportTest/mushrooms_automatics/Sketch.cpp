@@ -13,17 +13,28 @@
 #include "src/lights/Lights.h"
 #include "src/relay/Relay.h"
 
-#include "src/sensor/Keyboard.h"
-#include "src/sensor/TestDataReader.h"
+#include "src/sensor/test/Keyboard.h"
+#include "src/sensor/test/TestDataReader.h"
 
 #include "../src/FillerFacade.h"
 #include "../src/ConveyorFacade.h"
+
+#include "../src/sensor/PinReadMode.h"
+#include "../src/sensor/SensorDataReader.h"
 
 /**
  * Выводы реле
  */
  #define PIN_RELAY_CONVEYER 3
  #define PIN_RELAY_SCHNACK 4
+
+// ножки подключения одинаковые для клавиатуры и сенсора
+#define PIN_SCHNACK_BEGIN 14
+#define PIN_SCHNACK_END 15
+#define PIN_CONVEYOR_BEGIN 16
+#define PIN_CONVEYOR_END 17
+
+#define PIN_INPUT_TYPE 9
 
 // текущие данные экрана
 ScreenInfo screenInfo;
@@ -42,13 +53,46 @@ DataReader* pConveyorReader;
 FillerFacade* pFillerSubsystem;
 ConveyorFacade* pConveyorFacade;
 
+void initTestKeyboardDataReader() {
+	// чтение данных шнека
+	pKeyboard = new Keyboard();
+	pKeyboard->init();
+	
+	pSchnackReader = new TestDataReader(pKeyboard, 4, 3);
+	pConveyorReader = new TestDataReader(pKeyboard, 2, 1);
+}
+
+void initSensorDataReader() {
+	pSchnackReader = new SensorDataReader(PIN_SCHNACK_BEGIN, PIN_SCHNACK_END);
+	pConveyorReader = new SensorDataReader(PIN_CONVEYOR_BEGIN,  PIN_CONVEYOR_END);
+	
+	pSchnackReader->init();
+	pConveyorReader->init();
+}
+
+void initDataReader() {
+	PinReadMode configPin;
+	// высокое (по умолчанию) - сенсор, земля - клавиатура
+	configPin.init(PIN_INPUT_TYPE, false);
+	
+	pDisplay->clear();
+	
+	if (configPin.isOn()) {
+		pDisplay->logMessage(0, String("Sensor"));
+		initSensorDataReader();
+	} else {
+		pDisplay->logMessage(0, String("Test keyboard"));
+		initTestKeyboardDataReader();
+	}
+}
+
 void setup() {
 	// инициализация экрана
 	pDisplay = new Display();
 	pDisplay->init();
 	// TODO: считать статистику
 	// покажем счетчики и состояние
-	pDisplay->updateScreen(&screenInfo);
+	//pDisplay->updateScreen(&screenInfo);
 	
 	// лампочек состояния
 	pLights = new Lights();
@@ -59,12 +103,7 @@ void setup() {
 	pConveyor = new Relay(PIN_RELAY_CONVEYER);
 	pConveyor->init();
 	
-	// чтение данных шнека
-	pKeyboard = new Keyboard();
-	pKeyboard->init();
-	
-	pSchnackReader = new TestDataReader(pKeyboard, 4, 3);
-	pConveyorReader = new TestDataReader(pKeyboard, 2, 1);
+	initDataReader();
 	
 	// настройка упраления лентой подачи
 	pConveyorFacade = new ConveyorFacade(&screenInfo, 

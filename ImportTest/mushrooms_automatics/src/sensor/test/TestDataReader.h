@@ -13,7 +13,7 @@
 #define SCHNACK_KEY_S2 = 3;
 
 #include "Keyboard.h"
-#include "DataReader.h"
+#include "../DataReader.h"
 
 // Имитирует считывание показания датчиков при помощи клавиатуры.
 // Датчики шнека имитируются клавишами 4 (s1) и 3 (s2)

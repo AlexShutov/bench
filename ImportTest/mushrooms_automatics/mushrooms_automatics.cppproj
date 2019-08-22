@@ -376,25 +376,37 @@
     <Compile Include="src\relay\Relay.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\sensor\Keyboard.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\sensor\Keyboard.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\sensor\DataReader.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\sensor\DataReader.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\sensor\TestDataReader.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\sensor\TestDataReader.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\ProcessState.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\PinReadMode.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\PinReadMode.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\SensorDataReader.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\SensorDataReader.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\test\Keyboard.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\test\Keyboard.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\test\TestDataReader.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sensor\test\TestDataReader.h">
       <SubType>compile</SubType>
     </Compile>
     <Content Include="readme.html">
@@ -437,6 +449,7 @@
     <Folder Include="src\domain" />
     <Folder Include="src\sensor" />
     <Folder Include="src\relay" />
+    <Folder Include="src\sensor\test" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
