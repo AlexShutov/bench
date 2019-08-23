@@ -13,14 +13,21 @@
 #include "src/lights/Lights.h"
 #include "src/relay/Relay.h"
 
+// чтение данных с сенсоров
+#include "../src/sensor/PinReadMode.h"
+#include "../src/sensor/SensorDataReader.h"
+
+// чтение  показаний с тестовой клавиатуры
 #include "src/sensor/test/Keyboard.h"
 #include "src/sensor/test/TestDataReader.h"
 
+#include "src/stats/StatsPersister.h"
+
+// сохраняет статистику в памяти
 #include "../src/FillerFacade.h"
 #include "../src/ConveyorFacade.h"
 
-#include "../src/sensor/PinReadMode.h"
-#include "../src/sensor/SensorDataReader.h"
+#include <EEPROM.h>
 
 /**
  * Выводы реле
@@ -49,6 +56,11 @@ Relay* pConveyor;
 Keyboard* pKeyboard;
 DataReader* pSchnackReader;
 DataReader* pConveyorReader;
+
+// память статистики
+StatsPersister statsPersister;
+// статистика
+StatsData stats;
 
 FillerFacade* pFillerSubsystem;
 ConveyorFacade* pConveyorFacade;
@@ -90,9 +102,6 @@ void setup() {
 	// инициализация экрана
 	pDisplay = new Display();
 	pDisplay->init();
-	// TODO: считать статистику
-	// покажем счетчики и состояние
-	//pDisplay->updateScreen(&screenInfo);
 	
 	// лампочек состояния
 	pLights = new Lights();
@@ -116,10 +125,16 @@ void setup() {
 	// сначала инициализируем ленту, т.к. начальное состояние шнека зависит 
 	// от заполненности бункера семечкой  (лента)
 	pConveyorFacade->init();
-	pFillerSubsystem->init();
+	pFillerSubsystem->init();	
 }
 
 void loop() {
-	pFillerSubsystem->pollSchnack();
-	pConveyorFacade->pollConveyor();
+	statsPersister.readStats(stats);
+	screenInfo.countTotal = stats.totalCount;
+	screenInfo.countDay = stats.dayCount;
+	pDisplay->updateScreen(screenInfo);
+	stats.totalCount++;
+	stats.dayCount++;
+	statsPersister.saveStats(stats);
+	delay(200);
 }

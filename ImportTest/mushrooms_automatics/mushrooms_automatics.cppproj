@@ -409,6 +409,15 @@
     <Compile Include="src\sensor\test\TestDataReader.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\stats\StatsData.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\stats\StatsPersister.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\stats\StatsPersister.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Content Include="readme.html">
     </Content>
   </ItemGroup>
@@ -447,6 +456,7 @@
     <Folder Include="src\display" />
     <Folder Include="src\lights" />
     <Folder Include="src\domain" />
+    <Folder Include="src\stats" />
     <Folder Include="src\sensor" />
     <Folder Include="src\relay" />
     <Folder Include="src\sensor\test" />
