@@ -56,7 +56,7 @@ Keyboard* pKeyboard;
 DataReader* pSchnackReader;
 DataReader* pConveyorReader;
 
-// отвечает за показ статистики на экране
+// счетчики мешков
 StatsViewModel* pStatsViewModel;
 
 FillerFacade* pFillerSubsystem;
@@ -126,7 +126,7 @@ void setup() {
 	
 	// Настройка подсистемы заполнения мешков
 	pFillerSubsystem = new FillerFacade(&screenInfo,
-		pSchnack, pDisplay, pLights, pSchnackReader, pConveyorReader);
+		pSchnack, pDisplay, pStatsViewModel, pLights, pSchnackReader, pConveyorReader);
 	
 	// сначала инициализируем ленту, т.к. начальное состояние шнека зависит 
 	// от заполненности бункера семечкой  (лента)

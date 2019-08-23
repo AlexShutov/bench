@@ -9,9 +9,11 @@
 
 StateUiUpdateCallback::StateUiUpdateCallback(Relay* pRelay,
 	Display* pDisplay,
+	StatsViewModel* pStatsViewModel,
 	Lights* pLights,
 	ScreenInfo* pScreenInfo)
-: StateChangeCallbackBase(pRelay, pDisplay, pLights, pScreenInfo){
+: StateChangeCallbackBase(pRelay, pDisplay, pLights, pScreenInfo) {
+	mpStatsViewModel = pStatsViewModel;
 }
 
 // default destructor
@@ -24,8 +26,6 @@ void StateUiUpdateCallback::onEnterState() {
 
 void StateUiUpdateCallback::onExitStateState() {
 	// Обновляем счетчики мешков
-	getScreenInfo()->countDay++;
-	getScreenInfo()->countTotal++;
-	getDisplay()->updateScreen(getScreenInfo());
-	// TODO: сохранять счетчики в пямять, как будет готова эта подсистема.
+	mpStatsViewModel->increment();
+	mpStatsViewModel->updateDisplay(getDisplay(), *getScreenInfo());
 }

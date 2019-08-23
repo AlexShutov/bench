@@ -11,6 +11,7 @@
 FillerFacade::FillerFacade(ScreenInfo* pScreenInfo,
 	Relay* pSchnack,		
 	Display *pDisplay,
+	StatsViewModel* pStatsViewModel,
 	Lights *pLights,
 	DataReader* pSchnackReader,
 	DataReader* pConveyorReader)
@@ -18,6 +19,7 @@ FillerFacade::FillerFacade(ScreenInfo* pScreenInfo,
 	mpScreenInfo = pScreenInfo;
 	mpSchnack = pSchnack;
 	mpDisplay = pDisplay;
+	mpStatsViewModel = pStatsViewModel;
 	mpLights = pLights;
 	mpSchnackReader = pSchnackReader;
 	mpConveyorReader = pConveyorReader;
@@ -44,7 +46,7 @@ void FillerFacade::initStateFilling() {
 void FillerFacade::initStateUiUpdate() {
 	pStateUiUpdate = new StateUiUpdate(mpSchnackReader);
 	pCallbackUiUpdate = new StateUiUpdateCallback(mpSchnack, mpDisplay,
-		mpLights, mpScreenInfo);
+		mpStatsViewModel, mpLights, mpScreenInfo);
 	pStateUiUpdate->setStateChangeCallback(pCallbackUiUpdate);
 }
 

@@ -15,6 +15,7 @@
 #include "../src/lights/Lights.h"
 #include "../src/relay/Relay.h"
 #include "../src/sensor/DataReader.h"
+#include "../src/stats/StatsViewModel.h"
 
 // Подключение зависимостей состояний автомата, отвечающего за наполнение мешков
 #include "../src/domain/State.h"
@@ -42,6 +43,8 @@ protected:
 private:
 	// состояние экрана хранится глобально
 	ScreenInfo* mpScreenInfo;
+	// счетчик мешков
+	StatsViewModel* mpStatsViewModel;
 	// управление шнеком
 	Relay* mpSchnack;
 	// экран
@@ -79,6 +82,7 @@ public:
 	FillerFacade(ScreenInfo* pScreenInfo, 
 			Relay* pSchnack,
 			Display *pDisplay,
+			StatsViewModel* pStatsViewModel,
 			Lights *pLights,
 			DataReader* pSchnackReader,
 			DataReader* pConveyorReader);

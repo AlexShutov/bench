@@ -11,6 +11,7 @@
 
 #include "../../../State.h"
 #include "../../../StateChangeCallbackBase.h"
+#include "../src/stats/StatsViewModel.h"
 
 /************************************************************************/
 /* Данная стадия обновляет UI  
@@ -22,10 +23,13 @@ public:
 protected:
 private:
 	
+	StatsViewModel* mpStatsViewModel;
+	
 //functions
 public:
 	StateUiUpdateCallback(Relay* pRelay,
 		Display* pDisplay,
+		StatsViewModel* pStatsViewModel,
 		Lights* pLights,
 		ScreenInfo* pScreenInfo);
 	
