@@ -21,9 +21,8 @@
 #include "src/sensor/test/Keyboard.h"
 #include "src/sensor/test/TestDataReader.h"
 
-#include "src/stats/StatsPersister.h"
+#include "src/stats/StatsViewModel.h"
 
-// сохраняет статистику в памяти
 #include "../src/FillerFacade.h"
 #include "../src/ConveyorFacade.h"
 
@@ -57,10 +56,8 @@ Keyboard* pKeyboard;
 DataReader* pSchnackReader;
 DataReader* pConveyorReader;
 
-// память статистики
-StatsPersister statsPersister;
-// статистика
-StatsData stats;
+// отвечает за показ статистики на экране
+StatsViewModel* pStatsViewModel;
 
 FillerFacade* pFillerSubsystem;
 ConveyorFacade* pConveyorFacade;
@@ -98,6 +95,12 @@ void initDataReader() {
 	}
 }
 
+void initStatsViewModel() {
+	pStatsViewModel = new StatsViewModel();
+	pStatsViewModel->loadStats();
+	pStatsViewModel->updateDisplay(pDisplay, screenInfo);
+}
+
 void setup() {
 	// инициализация экрана
 	pDisplay = new Display();
@@ -114,6 +117,9 @@ void setup() {
 	
 	initDataReader();
 	
+	// инициализация показа статистики - экран уже готов
+	initStatsViewModel();
+	
 	// настройка упраления лентой подачи
 	pConveyorFacade = new ConveyorFacade(&screenInfo, 
 		pConveyor, pDisplay, pConveyorReader);
@@ -129,12 +135,6 @@ void setup() {
 }
 
 void loop() {
-	statsPersister.readStats(stats);
-	screenInfo.countTotal = stats.totalCount;
-	screenInfo.countDay = stats.dayCount;
-	pDisplay->updateScreen(screenInfo);
-	stats.totalCount++;
-	stats.dayCount++;
-	statsPersister.saveStats(stats);
-	delay(200);
+	pFillerSubsystem->pollSchnack();
+	pConveyorFacade->pollConveyor();
 }

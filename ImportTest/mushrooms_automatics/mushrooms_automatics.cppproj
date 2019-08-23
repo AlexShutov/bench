@@ -418,6 +418,12 @@
     <Compile Include="src\stats\StatsPersister.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\stats\StatsViewModel.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\stats\StatsViewModel.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Content Include="readme.html">
     </Content>
   </ItemGroup>
