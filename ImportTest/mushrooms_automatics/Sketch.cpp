@@ -40,7 +40,10 @@
 #define PIN_CONVEYOR_BEGIN 16
 #define PIN_CONVEYOR_END 17
 
+// Ножка для выбора ввода (сенсор (5v)/ Тестовая клавиатура (земля))
 #define PIN_INPUT_TYPE 9
+// Ножка кнопки для сброса суточного счетчика
+#define PIN_RESET_DAY_COUNT 8
 
 // текущие данные экрана
 ScreenInfo screenInfo;
@@ -56,8 +59,11 @@ Keyboard* pKeyboard;
 DataReader* pSchnackReader;
 DataReader* pConveyorReader;
 
-// счетчики мешков
+// Счетчики мешков
 StatsViewModel* pStatsViewModel;
+// Кнопка сброса суточного счетчика
+PinReadMode buttonResetDayCount;
+bool buttonResetPrevState;
 
 FillerFacade* pFillerSubsystem;
 ConveyorFacade* pConveyorFacade;
@@ -87,10 +93,8 @@ void initDataReader() {
 	pDisplay->clear();
 	
 	if (configPin.isOn()) {
-		pDisplay->logMessage(0, String("Sensor"));
 		initSensorDataReader();
 	} else {
-		pDisplay->logMessage(0, String("Test keyboard"));
 		initTestKeyboardDataReader();
 	}
 }
@@ -99,6 +103,11 @@ void initStatsViewModel() {
 	pStatsViewModel = new StatsViewModel();
 	pStatsViewModel->loadStats();
 	pStatsViewModel->updateDisplay(pDisplay, screenInfo);
+}
+
+void initResetDayCountButton() {
+	buttonResetDayCount.init(PIN_RESET_DAY_COUNT, false);
+	buttonResetPrevState = buttonResetDayCount.isOn();
 }
 
 void setup() {
@@ -119,6 +128,8 @@ void setup() {
 	
 	// инициализация показа статистики - экран уже готов
 	initStatsViewModel();
+	// настроим кнопку сброса счетчика мешков
+	initResetDayCountButton();
 	
 	// настройка упраления лентой подачи
 	pConveyorFacade = new ConveyorFacade(&screenInfo, 
@@ -134,7 +145,23 @@ void setup() {
 	pFillerSubsystem->init();	
 }
 
+void pollDayCountResetButton() {
+	bool isOn = buttonResetDayCount.isOn();
+	if (isOn != buttonResetPrevState) {
+		delay(50);
+		if (isOn != buttonResetPrevState) {
+			if (isOn) {
+				// кнопка нажата
+				pStatsViewModel->resetDayStats();
+				pStatsViewModel->updateDisplay(pDisplay, screenInfo);
+			}
+			buttonResetPrevState = isOn;
+		}
+	}
+}
+
 void loop() {
 	pFillerSubsystem->pollSchnack();
 	pConveyorFacade->pollConveyor();
+	pollDayCountResetButton();
 }
